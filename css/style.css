@@ -507,3 +507,74 @@ input[type=range]:focus-visible{outline:2px solid var(--chapter-accent);outline-
   .necessity-list{flex-direction:column}
   .necessity-item{flex:1 1 auto}
 }
+
+/* ---------- Phase 3 — ch12 "His circle" ---------- */
+.peers-net{
+  position:relative;aspect-ratio:16/11;min-height:320px;
+  border:1px solid var(--line-soft);background:var(--ink);overflow:hidden;
+}
+.peers-net canvas{position:absolute;inset:0;width:100%;height:100%}
+.peers-hub{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  font-family:var(--font-display);font-size:1.25rem;color:var(--ivory);
+  letter-spacing:.02em;pointer-events:none;
+}
+.peer-node{
+  position:absolute;transform:translate(-50%,-50%);cursor:pointer;
+  background:var(--ink-surface);color:var(--parchment);
+  border:1px solid var(--line);padding:.3rem .55rem;white-space:nowrap;
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;
+  transition:border-color .25s var(--ease),color .25s var(--ease);
+}
+.peer-node:hover{border-color:var(--chapter-accent);color:var(--ivory)}
+.peer-node.is-on{border-color:var(--chapter-accent);color:var(--ink);background:var(--chapter-accent)}
+.peer-name{
+  margin:.1rem 0 .3rem;font-family:var(--font-display);
+  font-size:1.05rem;color:var(--ivory);
+}
+.peer-text{margin:0;font-size:.86rem;line-height:1.62;color:var(--parchment)}
+/* below ~700px the radial layout stops being readable: stack it */
+.peers-net.is-stacked{aspect-ratio:auto;min-height:0;padding:1rem;border:0;background:none}
+.peers-net.is-stacked canvas,
+.peers-net.is-stacked .peers-hub{display:none}
+.peers-net.is-stacked .peers-nodes{display:flex;flex-wrap:wrap;gap:.4rem}
+.peers-net.is-stacked .peer-node{position:static;transform:none}
+
+/* ---------- Phase 3 — ch14 timeline ---------- */
+.timeline-wrap{aspect-ratio:16/7}
+.tl-event{margin:.2rem 0 0;font-size:.86rem;line-height:1.62;color:var(--parchment)}
+.tl-list{margin:.4rem 0 0;padding-left:1.05rem;font-size:.84rem;line-height:1.6}
+.tl-list li{margin-bottom:.45rem;color:var(--parchment)}
+.tl-list b{font-family:var(--font-mono);font-size:.74rem;color:var(--chapter-accent);letter-spacing:.06em}
+
+/* ---------- Phase 3 — ch15 sources ---------- */
+.sources-head{
+  font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--chapter-accent);
+  margin:2.4rem 0 .8rem;font-weight:400;
+}
+.sources-list{margin:0;padding-left:1.4rem;font-size:.88rem;line-height:1.7}
+.sources-list li{margin-bottom:.7rem;color:var(--parchment)}
+.sources-list a{color:var(--chapter-accent);text-decoration:underline;text-underline-offset:2px}
+.rubric-table{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:.6rem}
+.rubric-table th,.rubric-table td{
+  text-align:left;padding:.55rem .7rem;border-bottom:1px solid var(--line-soft);
+  vertical-align:top;
+}
+.rubric-table th{
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--stone);font-weight:400;
+}
+.rubric-table td{color:var(--parchment)}
+.rubric-table td a{color:var(--chapter-accent);text-decoration:underline;text-underline-offset:2px}
+@media(max-width:600px){
+  .rubric-table,.rubric-table tbody,.rubric-table tr,.rubric-table td{display:block;width:100%}
+  .rubric-table thead{display:none}
+  .rubric-table tr{border-bottom:1px solid var(--line-soft);padding:.5rem 0}
+  .rubric-table td{border:0;padding:.15rem 0}
+  .rubric-table td:last-child{color:var(--chapter-accent);font-family:var(--font-mono);font-size:.75rem}
+}
+
+/* A lab whose visual needs the full column width (ch12's network):
+   one column, controls below the figure rather than beside it. */
+.lab.lab-wide{grid-template-columns:1fr}
