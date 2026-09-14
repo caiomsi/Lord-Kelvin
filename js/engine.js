@@ -42,7 +42,7 @@
     if (!ctx) return null;
 
     var container = canvas.parentElement || canvas;
-    var state = { canvas: canvas, ctx: ctx, w: 0, h: 0, dpr: 1 };
+    var state = { canvas: canvas, ctx: ctx, w: 0, h: 0, dpr: 1, onFit: null };
 
     function fit() {
       var rect = container.getBoundingClientRect();
@@ -55,6 +55,15 @@
       canvas.style.height = h + 'px';
       try { ctx.setTransform(dpr, 0, 0, dpr, 0, 0); } catch (e) { /* older browsers */ }
       state.w = w; state.h = h; state.dpr = dpr;
+
+      /* Resizing a canvas clears it. The ResizeObserver below fires
+         its first callback AFTER init has already drawn, so without
+         this hook that initial frame is silently wiped and — for a
+         module with no rAF loop, or under reduced motion — never
+         comes back. Modules that draw on demand set stage.onFit. */
+      if (typeof state.onFit === 'function') {
+        try { state.onFit(); } catch (e) { /* ignore */ }
+      }
     }
 
     fit();
