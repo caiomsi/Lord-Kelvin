@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow, max-image-preview:large">
-  <meta name="author" content="Caio·MSI">
 
   <title>Kelvin — The Absolute Scale</title>
   <meta name="description" content="An immersive, interactive exploration of Lord Kelvin — absolute temperature, the Second Law of thermodynamics, the transatlantic cable, and the age of the Earth he got wrong. An AP Physics research project.">
@@ -17,14 +16,14 @@
   <meta property="og:url" content="https://caiomsi.github.io/Lord-Kelvin/">
   <meta property="og:site_name" content="Kelvin — The Absolute Scale">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://caiomsi.github.io/Lord-Kelvin/images/social-share.png">
+  <meta property="og:image" content="https://caiomsi.github.io/Lord-Kelvin/images/social-share.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Kelvin — The Absolute Scale">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Kelvin — The Absolute Scale">
   <meta name="twitter:description" content="The man who found the bottom of temperature. An immersive, interactive exploration of William Thomson's life and physics.">
-  <meta name="twitter:image" content="https://caiomsi.github.io/Lord-Kelvin/images/social-share.png">
+  <meta name="twitter:image" content="https://caiomsi.github.io/Lord-Kelvin/images/social-share.jpg">
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="mask-icon" href="favicon.svg" color="#c9a14a">
@@ -85,7 +84,6 @@
     "url": "https://caiomsi.github.io/Lord-Kelvin/",
     "mainEntityOfPage": "https://caiomsi.github.io/Lord-Kelvin/",
     "inLanguage": "en",
-    "author": { "@type": "Person", "name": "Caio·MSI" },
     "about": { "@type": "Person", "name": "William Thomson, 1st Baron Kelvin" }
   }
   </script>
@@ -184,7 +182,82 @@
           <p class="kicker">Act II · The physics</p>
           <h2 class="chapter-title">The scale with a bottom</h2>
         </div>
-        <!-- PHASE 2 FILLS THIS -->
+
+        <p class="lede reveal">In 1848, Kelvin threw out the thermometer and defined temperature from a heat engine instead — and the ratio he found had nowhere to go below zero.</p>
+
+        <div class="before-card reveal">
+          <span class="before-label">Before Kelvin, people believed</span>
+          <p>Temperature had no agreed lower bound. Every thermometer measured some substance's own behaviour — mercury's length, a gas's pressure — and different substances disagreed with each other away from the points where they happened to be calibrated together. There was no reason to think "cold" had a bottom at all.</p>
+        </div>
+
+        <div class="prose reveal">
+          <p>Kelvin's 1848 paper, "On an Absolute Thermometric Scale Founded on Carnot's Theory of the Motive Power of Heat," sidestepped the substance problem entirely. Sadi Carnot had shown that an ideal heat engine's efficiency depends only on the temperatures of its two reservoirs — not on whether it runs on steam, air, or anything else. Kelvin used that fact to define temperature itself, independent of any material.</p>
+          <p>The result was a scale with a floor. Since no engine can be more than 100% efficient, the ratio Kelvin defined implies a coldest possible temperature — the point at which a perfect engine would extract <em>all</em> the heat as work. He placed it at −273.15 °C. Every kelvin above that is exactly one Celsius degree wide; only the zero point moved.</p>
+        </div>
+
+        <details class="physics reveal">
+          <summary>The physics</summary>
+          <p>A reversible (Carnot) engine moves heat Q₁ out of a hot reservoir and Q₂ into a cold one while doing work. Carnot's theorem says the ratio Q₁⁄Q₂ is the same for <em>any</em> reversible engine running between the same two reservoirs — it can only depend on the reservoir temperatures. Kelvin defined temperature to make that ratio explicit:</p>
+          <div class="eq"><span class="frac"><span class="num">Q₁</span><span class="den">Q₂</span></span><span>=</span><span class="frac"><span class="num">T₁</span><span class="den">T₂</span></span></div>
+          <p>That equation alone fixes a scale, up to one free constant (the size of a degree) and one free zero point — no mercury, no alcohol, no calibration substance required. Because an engine's efficiency η = 1 − Q₂⁄Q₁ can never exceed 1, T can never go below zero on this scale:</p>
+          <div class="eq"><span>0 K = −273.15 °C = −459.67 °F</span></div>
+          <p>Since the SI redefinition of 2019, the kelvin no longer depends on any physical sample at all — it is fixed by the Boltzmann constant, k = 1.380649×10⁻²³ J/K, exactly.</p>
+        </details>
+
+        <div class="lab reveal">
+          <div class="lab-canvas-wrap">
+            <canvas id="therm-canvas" aria-label="Nitrogen molecules drifting at a speed set by the selected temperature; they slow and freeze in place as the temperature approaches absolute zero."></canvas>
+          </div>
+          <div class="controls">
+            <div class="readout-trio">
+              <div><span class="readout-label">Kelvin</span><span class="readout" id="therm-k">300.0</span></div>
+              <div><span class="readout-label">Celsius</span><span class="readout" id="therm-c">26.9</span></div>
+              <div><span class="readout-label">Fahrenheit</span><span class="readout" id="therm-f">80.3</span></div>
+            </div>
+            <div class="control">
+              <label for="therm-range">Temperature (0 K → 10⁸ K, log scale)</label>
+              <div class="scale-track"><input type="range" id="therm-range" min="0" max="1000" step="1" value="448" aria-label="Temperature, 0 kelvin to 100 million kelvin on a log scale"></div>
+            </div>
+            <div class="control">
+              <label id="therm-landmarks-label">Jump to a landmark</label>
+              <div class="landmark-row" id="therm-landmarks" aria-labelledby="therm-landmarks-label">
+                <button type="button" class="tag landmark-btn" data-k="0">Absolute zero</button>
+                <button type="button" class="tag landmark-btn" data-k="2.725">CMB</button>
+                <button type="button" class="tag landmark-btn" data-k="4.2">He boils</button>
+                <button type="button" class="tag landmark-btn" data-k="77">N₂ boils</button>
+                <button type="button" class="tag landmark-btn" data-k="184">Coldest on Earth</button>
+                <button type="button" class="tag landmark-btn" data-k="273.15">Water freezes</button>
+                <button type="button" class="tag landmark-btn" data-k="310">Body heat</button>
+                <button type="button" class="tag landmark-btn" data-k="373.15">Water boils</button>
+                <button type="button" class="tag landmark-btn" data-k="1811">Iron melts</button>
+                <button type="button" class="tag landmark-btn" data-k="5772">Sun's surface</button>
+                <button type="button" class="tag landmark-btn" data-k="15700000">Sun's core</button>
+              </div>
+            </div>
+            <p class="figcap">v<sub>rms</sub> (N₂) ≈ <span id="therm-vrms">517</span> m/s</p>
+          </div>
+        </div>
+        <p class="lab-summary">What this shows: each dot is a nitrogen molecule; its drift speed is drawn from KelvinPhysics.vRms at the selected temperature. Drag the scale or tap a landmark — motion visibly stops as the temperature approaches 0 K.</p>
+
+        <div class="lab reveal">
+          <div class="lab-canvas-wrap">
+            <canvas id="gaslaw-canvas" aria-label="Chart of gas volume against temperature in Celsius for four gas samples, each a straight line, all extrapolating to zero volume at the same temperature."></canvas>
+          </div>
+          <div class="controls">
+            <div class="control">
+              <label for="gaslaw-scale">Gas quantity <span class="control-value" id="gaslaw-scale-value">×1.00</span></label>
+              <input type="range" id="gaslaw-scale" min="0.4" max="2" step="0.05" value="1">
+            </div>
+            <p class="figcap">Four samples of gas, each a different amount, so each line has a different slope. Solid where it's measured; dashed where it's extrapolated into the cold, past where any real gas would have liquefied.</p>
+          </div>
+        </div>
+        <p class="lab-summary">What this shows: KelvinPhysics.charlesVolume(T, slope) plotted for four different slopes at once. Drag the control — every slope changes, but the line always crosses zero volume at exactly −273.15 °C. That shared crossing point is how Kelvin located absolute zero without ever reaching it.</p>
+
+        <div class="figure reveal">
+          <img src="images/frost-crystals.jpg" alt="Frost crystals forming on dark glass" width="1600" height="895" loading="lazy">
+          <p class="figcap">Illustration.</p>
+        </div>
+        <!-- /PHASE 2 -->
       </div>
     </section>
 
@@ -195,7 +268,64 @@
           <p class="kicker">Act II · The physics</p>
           <h2 class="chapter-title">The Second Law</h2>
         </div>
-        <!-- PHASE 2 FILLS THIS -->
+
+        <p class="lede reveal">Heat never flows uphill on its own — and that one quiet rule sets a hard ceiling on every engine that has ever been built.</p>
+
+        <div class="before-card reveal">
+          <span class="before-label">Before Kelvin, people believed</span>
+          <p>Heat was <em>caloric</em> — a weightless, indestructible fluid that flowed from hot bodies to cold ones and was simply conserved, the way water finds its level. "Energy" was not yet a unifying idea joining heat, motion and work together.</p>
+        </div>
+
+        <div class="prose reveal">
+          <p>In 1851, Kelvin stated what a heat engine can never do: run in a cycle, draw heat from a single reservoir, and turn all of it into work with nothing else changing. Rudolf Clausius had stated an equivalent rule from the other direction: heat never passes from a colder body to a hotter one by itself. The two statements describe the same law from opposite sides.</p>
+          <p>The following year, in "On a Universal Tendency in Nature to the Dissipation of Mechanical Energy," Kelvin pushed the idea further: every real process loses some usable energy as heat that can never be fully recovered as work. Run that forward across the whole universe and you get an unsettling prediction — a slow, one-way drift toward a state where nothing more can happen: the "heat death" of the universe.</p>
+        </div>
+
+        <div class="grid-2 reveal">
+          <div class="card">
+            <span class="tag">Kelvin, 1851</span>
+            <p>No engine, working in a cycle, can take heat from a single reservoir and convert all of it into work with no other effect. Some heat always has to be dumped somewhere colder.</p>
+          </div>
+          <div class="card">
+            <span class="tag">Clausius</span>
+            <p>Heat never flows from a colder body to a hotter one on its own. Making it happen — as a refrigerator does — always costs outside work.</p>
+          </div>
+        </div>
+
+        <details class="physics reveal">
+          <summary>The physics</summary>
+          <p>Run a reversible engine between a hot reservoir at T<sub>h</sub> and a cold one at T<sub>c</sub> — both absolute, in kelvin — and its efficiency has a hard ceiling set by nothing but those two temperatures:</p>
+          <div class="eq"><span>η</span><span>=</span><span>1</span><span>−</span><span class="frac"><span class="num">T<sub>c</sub></span><span class="den">T<sub>h</sub></span></span></div>
+          <p>Because T<sub>c</sub> can never be negative, η can only reach 1 if T<sub>c</sub> = 0 K — and chapter 03 already showed absolute zero is a limit nothing ever reaches. Every real engine, forever, leaks some heat to its surroundings instead of converting all of it to work. That unavoidable leak is the "dissipation" in Kelvin's 1852 title.</p>
+        </details>
+
+        <div class="lab reveal">
+          <div class="lab-canvas-wrap">
+            <canvas id="carnot-canvas" aria-label="Diagram of a Carnot engine: heat flows in from a hot reservoir on the left, splits into work out the top and waste heat into a cold reservoir on the right, with arrow widths proportional to each flow."></canvas>
+          </div>
+          <div class="controls">
+            <div class="control">
+              <label>Efficiency</label>
+              <div><span class="readout readout-lg" id="carnot-eta">50.0</span><span class="readout-unit">%</span></div>
+            </div>
+            <div class="control">
+              <label for="carnot-th"><span>Hot reservoir T<sub>h</sub></span><span class="control-value" id="carnot-th-value">600 K</span></label>
+              <input type="range" id="carnot-th" min="310" max="1200" step="5" value="600">
+            </div>
+            <div class="control">
+              <label for="carnot-tc"><span>Cold reservoir T<sub>c</sub></span><span class="control-value" id="carnot-tc-value">300 K</span></label>
+              <input type="range" id="carnot-tc" min="0" max="500" step="5" value="300">
+            </div>
+            <p class="inline-note" id="carnot-warn" hidden>No net work here — the "cold" reservoir isn't colder than the hot one.</p>
+          </div>
+        </div>
+        <p class="lab-summary">What this shows: KelvinPhysics.carnotEfficiency(T_h, T_c) drawn live as the width of the work arrow (top) against the two heat arrows either side of the engine. Drag T_c toward zero — efficiency climbs toward 100%, but never arrives, because T_c itself can never reach 0 K.</p>
+
+        <div class="figure reveal">
+          <img src="images/steam-engine-detail.jpg" alt="Detail of a Victorian steam engine's brass and iron machinery" width="1600" height="895" loading="lazy">
+          <p class="figcap">Illustration.</p>
+        </div>
+        <!-- /PHASE 2 -->
       </div>
     </section>
 
@@ -206,7 +336,47 @@
           <p class="kicker">Act II · The physics</p>
           <h2 class="chapter-title">Joule–Thomson</h2>
         </div>
-        <!-- PHASE 2 FILLS THIS -->
+
+        <p class="lede reveal">Push a real gas through a plug from high pressure to low, and — unlike the ideal gas of a textbook — its temperature actually moves. Which way depends on one number.</p>
+
+        <div class="before-card reveal">
+          <span class="before-label">Before Kelvin, people believed</span>
+          <p>Gases were assumed to behave ideally — their temperature indifferent to pressure alone with nothing else changing. There was no known, practical route to liquefying air, and refrigeration beyond ice and salt was barely a science at all.</p>
+        </div>
+
+        <div class="prose reveal">
+          <p>Kelvin met James Prescott Joule, a Manchester brewer's son the physics establishment was largely ignoring, at a British Association meeting in 1847. The friendship that followed produced, in 1852, the Joule–Thomson effect: force a real gas through a porous plug or valve — a throttle — from high pressure to low, with no heat exchanged and no work extracted, and its temperature changes anyway. An ideal gas would not notice. A real one does, because real molecules pull on each other.</p>
+          <p>Whether the gas cools or warms depends on its temperature going in, relative to a threshold called the inversion temperature. Below it, throttling cools the gas — the working principle behind every modern refrigerator, air liquefier, and the liquid-helium magnet inside an MRI scanner.</p>
+        </div>
+
+        <details class="physics reveal">
+          <summary>The physics</summary>
+          <p>Modelling the gas with the van der Waals equation, the Joule–Thomson coefficient — how much the temperature moves per unit drop in pressure, at constant enthalpy — works out to:</p>
+          <div class="eq"><span>μ<sub>JT</sub></span><span>=</span><span class="frac"><span class="num">1</span><span class="den">C<sub>p</sub></span></span><span>(</span><span class="frac"><span class="num">2a</span><span class="den">RT</span></span><span>− b)</span></div>
+          <p>μ<sub>JT</sub> is positive — cooling — whenever T is below the inversion temperature, and negative — heating — above it. That threshold falls out of the same expression:</p>
+          <div class="eq"><span>T<sub>inv</sub></span><span>=</span><span class="frac"><span class="num">2a</span><span class="den">Rb</span></span></div>
+          <p>For the nitrogen modelled below (van der Waals a = 0.1408 Pa·m⁶/mol², b = 3.913×10⁻⁵ m³/mol, C<sub>p</sub> ≈ 29.1 J/(mol·K)), that threshold works out to ≈ <span class="jt-tinv-out">866</span> K — well above room temperature, which is why throttling nitrogen at ordinary starting temperatures cools it.</p>
+        </details>
+
+        <div class="lab reveal">
+          <div class="lab-canvas-wrap">
+            <canvas id="jt-canvas" aria-label="Gas particles flowing left to right through a porous plug; they visibly slow down or speed up after crossing it, depending on whether the gas is cooling or heating."></canvas>
+          </div>
+          <div class="controls">
+            <div class="control">
+              <label>State</label>
+              <span class="readout readout-lg jt-state" id="jt-state">COOLING</span>
+            </div>
+            <div class="control">
+              <label for="jt-temp">Inlet temperature <span class="control-value" id="jt-temp-value">300 K</span></label>
+              <input type="range" id="jt-temp" min="50" max="1300" step="5" value="300">
+            </div>
+            <p class="figcap">ΔT ≈ <span id="jt-dt">0.00</span><span class="readout-unit">K</span> for a representative pressure drop · inversion temperature ≈ <span class="jt-tinv-out">866</span><span class="readout-unit">K</span></p>
+            <p class="figcap">Modelling nitrogen (N₂) as a van der Waals gas.</p>
+          </div>
+        </div>
+        <p class="lab-summary">What this shows: particles cross the porous plug from high pressure (left) to low pressure (right); their speed after crossing is drawn from the sign and size of KelvinPhysics.jouleThomsonCoefficient at the chosen inlet temperature. Drag the slider through ≈<span class="jt-tinv-out">866</span> K and watch the state flip from cooling to heating.</p>
+        <!-- /PHASE 2 -->
       </div>
     </section>
 
@@ -217,7 +387,93 @@
           <p class="kicker">Act II · The physics</p>
           <h2 class="chapter-title">3,000 km of copper</h2>
         </div>
-        <!-- PHASE 2 FILLS THIS -->
+
+        <p class="lede reveal">The map made it look like an engineering problem. The physics was a differential equation — and getting the physics right is the difference between a cable that died within weeks and one that made him a knight.</p>
+
+        <div class="before-card reveal">
+          <span class="before-label">Before Kelvin, people believed</span>
+          <p>A signal placed on one end of a wire was assumed to arrive at the other end effectively instantly, the way it does on a short line. No one had reckoned with 3,000 kilometres of cable acting as one continuous capacitor and resistor at once — or with how badly that combination would blur a signal over such a distance.</p>
+        </div>
+
+        <div class="prose reveal">
+          <p>The first transatlantic cable, laid in 1858, worked only briefly. Its chief electrician, Wildman Whitehouse, refused to believe retardation was a real physical effect and drove the line with brutally high induction-coil voltages to try to force signals through faster — voltages that destroyed the cable's insulation. Kelvin's approach for the second attempt, laid successfully in 1866, was the opposite: tiny, safe currents, paired with a detector sensitive enough to read them anyway. It worked. He was knighted that same year, and the patents that followed made him rich.</p>
+        </div>
+
+        <div class="figure reveal">
+          <img src="images/cable-ocean-floor.jpg" alt="A telegraph cable disappearing across a dark abyssal ocean floor" width="1600" height="895" loading="lazy">
+          <p class="figcap">Illustration.</p>
+        </div>
+
+        <details class="physics reveal">
+          <summary>The physics</summary>
+          <p>A long submarine cable behaves like a distributed resistor-capacitor line: every metre of copper core has resistance, and every metre of insulated cable sitting in the ocean is a tiny capacitor against the seawater around it. A signal doesn't arrive as a sharp step — it diffuses in, the same mathematics Fourier used for heat spreading down a bar. The delay to reach a useful fraction of full strength scales as:</p>
+          <div class="eq"><span>delay</span><span>∝</span><span>L<sup>2</sup></span></div>
+          <p>— the law of squares. Double the cable's length and the delay does not double. It quadruples. That single relationship is why the geometry of the Atlantic made this a genuinely hard problem and not just a long one — and why Whitehouse's brute-force voltage made things worse rather than better: more voltage doesn't fight diffusion, it just stresses the insulation.</p>
+        </details>
+
+        <div class="lab reveal">
+          <div class="lab-canvas-wrap">
+            <canvas id="cable-canvas" aria-label="Chart of signal strength along the cable's length after pressing Send; the rising curve smears and flattens the farther the signal has to travel."></canvas>
+          </div>
+          <div class="controls">
+            <div class="control">
+              <label for="cable-length">Cable length <span class="control-value" id="cable-length-value">3000 km</span></label>
+              <input type="range" id="cable-length" min="100" max="6000" step="50" value="3000">
+            </div>
+            <button type="button" class="btn-lab" id="cable-send">Send pulse</button>
+            <div class="control">
+              <label>Arrival delay</label>
+              <span class="readout readout-lg" id="cable-delay">3.6 s</span>
+            </div>
+          </div>
+        </div>
+        <p class="lab-summary">What this shows: KelvinPhysics.cableStepResponse traced along the cable's length at the current simulated instant, using representative mid-19th-century values for resistance (~2 Ω/km) and capacitance (~0.4 µF/km). Double the length and press Send again — the delay quadruples: the law of squares, live.</p>
+
+        <div class="prose reveal">
+          <p>Getting a signal down the cable was only half the problem. On the receiving end, that smeared, barely-there trickle of current had to be read at all. Kelvin's answer was the mirror galvanometer — an "optical lever" sensitive enough to turn a current far too small to feel into a spot of light anyone could read.</p>
+        </div>
+
+        <details class="physics reveal">
+          <summary>The physics — the mirror galvanometer</summary>
+          <p>A tiny mirror, suspended on a fine fibre inside a magnet coil, tilts by an angle proportional to the current through the coil: θ = current × sensitivity. Because the angle of incidence equals the angle of reflection, tilting the mirror by θ swings the reflected beam by twice that — 2θ — before the beam even leaves the mirror. Send that doubled angle down a long "arm" to a distant scale, and a swing far too small to read directly becomes a spot of light anyone can see move:</p>
+          <div class="eq"><span>deflection</span><span>=</span><span>arm</span><span>×</span><span>tan(2θ)</span></div>
+          <p>The long arm and the angle-doubling are two independent multipliers stacked on top of each other — which is how a submarine cable's microamp-scale trickle became a legible signal at all.</p>
+        </details>
+
+        <div class="lab reveal">
+          <div class="lab-canvas-wrap">
+            <canvas id="galv-canvas" aria-label="Diagram of a beam of light reflecting off a small tilting mirror onto a distant scale; the reflected spot swings with the applied current."></canvas>
+          </div>
+          <div class="controls">
+            <div class="control">
+              <label for="galv-current">Current <span class="control-value" id="galv-current-value">0.0 µA</span></label>
+              <input type="range" id="galv-current" min="-50" max="50" step="1" value="0">
+            </div>
+            <button type="button" class="btn-lab" id="galv-play">Play message</button>
+            <div class="control">
+              <label id="galv-transcript-label">Decoded transcript</label>
+              <p class="transcript" id="galv-transcript" aria-live="polite" aria-labelledby="galv-transcript-label"></p>
+            </div>
+          </div>
+        </div>
+        <p class="lab-summary">What this shows: a current tilts a tiny mirror by θ = current × sensitivity; because the angle of incidence equals the angle of reflection, the reflected beam swings by 2θ (KelvinPhysics.galvanometerDeflection) — doubling the effect before it even reaches the long arm to the scale. "Play message" keys the mirror in real Morse code and decodes it live above.</p>
+
+        <div class="figure reveal">
+          <img src="images/mirror-galvanometer.jpg" alt="Historical photograph of Thomson's mirror galvanometer" width="715" height="1400" loading="lazy">
+          <p class="figcap">Historical photograph — Thomson's mirror galvanometer. Public domain, Wikimedia Commons.</p>
+        </div>
+
+        <div class="grid-2 reveal">
+          <div class="figure">
+            <img src="images/great-eastern-1866.jpg" alt="The Great Eastern, the ship that laid the successful 1866 transatlantic cable" width="1400" height="998" loading="lazy">
+            <p class="figcap">Historical photograph — the <em>Great Eastern</em>, which laid the successful 1866 cable. Public domain, Wikimedia Commons.</p>
+          </div>
+          <div class="figure">
+            <img src="images/siphon-recorder.jpg" alt="Historical illustration of Kelvin's early siphon recorder" width="975" height="1200" loading="lazy">
+            <p class="figcap">Historical illustration — Kelvin's early siphon recorder, from the 1911 <em>Encyclopædia Britannica</em>. Public domain, Wikimedia Commons.</p>
+          </div>
+        </div>
+        <!-- /PHASE 2 -->
       </div>
     </section>
 
@@ -228,7 +484,102 @@
           <p class="kicker">Act II · The physics</p>
           <h2 class="chapter-title">The instruments</h2>
         </div>
-        <!-- PHASE 2 FILLS THIS -->
+
+        <p class="lede reveal">Roughly seventy patents came out of one restless mind — a compass, a sounder, a bridge circuit, a recorder. Two of them are showpieces: a generator with no battery, and a brass machine that predicts the tide.</p>
+
+        <div class="before-card reveal">
+          <span class="before-label">Before Kelvin, people believed</span>
+          <p>Tide tables were built by tedious manual harmonic analysis, redone by hand for every port, or by local rules of thumb that broke down anywhere they hadn't been measured directly. There was no machine that could simply add up a tide's ingredients and trace the answer.</p>
+        </div>
+
+        <div class="prose reveal">
+          <p>Between the cable years and his death, Kelvin patented roughly seventy inventions: a mariner's compass corrected to work on iron-hulled ships and adopted by the Royal Navy; a sounding machine that read ocean depth without stopping the ship; the Kelvin bridge, for measuring very low resistances; the siphon recorder, which inked incoming cable signals onto paper automatically. Two of the instruments below repay a closer look, because each one makes an abstract idea physically watchable.</p>
+        </div>
+
+        <div class="figure reveal">
+          <img src="images/instrument-workbench.jpg" alt="A Victorian instrument-maker's workbench with brass tools" width="1600" height="895" loading="lazy">
+          <p class="figcap">Illustration.</p>
+        </div>
+
+        <details class="physics reveal">
+          <summary>The physics — the water dropper</summary>
+          <p>Two streams of water drops fall through metal induction rings on their way to two collecting cans — but each ring is wired not to the can below it, but to the <em>opposite</em> can. Any tiny, accidental charge imbalance between the two sides induces a charge on the drops falling through the nearer ring, and because of the cross-wiring, those drops carry that charge into the can that <em>reinforces</em> the original imbalance. The imbalance grows the very drops that grow it — positive feedback — and it runs away exponentially until a spark discharges it:</p>
+          <div class="eq"><span>V(t)</span><span>=</span><span>e<sup>t⁄τ</sup></span><span>− 1</span></div>
+          <p>τ is the feedback time constant, set by the drop rate. There is no battery anywhere; the entire voltage comes from induction feeding on itself.</p>
+        </details>
+
+        <div class="lab reveal">
+          <div class="lab-canvas-wrap">
+            <canvas id="dropper-canvas" aria-label="Two streams of water droplets falling through induction rings into collecting cans that are cross-wired to the opposite side; a voltage bar climbs and a spark discharges it periodically."></canvas>
+          </div>
+          <div class="controls">
+            <div class="control">
+              <label>Charge (relative units)</label>
+              <span class="readout readout-lg" id="dropper-voltage">0.00</span>
+            </div>
+            <div class="control">
+              <label for="dropper-rate">Drop rate <span class="control-value" id="dropper-rate-value">5 / 10</span></label>
+              <input type="range" id="dropper-rate" min="1" max="10" step="1" value="5">
+            </div>
+          </div>
+        </div>
+        <p class="lab-summary">What this shows: KelvinPhysics.dropperVoltage(t, τ) climbing in real time from the cross-connected induction rings; the brass flash is the spark that discharges it, after which the cycle restarts from zero. Faster drop rate, shorter τ, quicker sparks.</p>
+
+        <div class="pullquote reveal">
+          He read Fourier's heat mathematics at sixteen. Forty years later, the same mathematics — a sum of pure sine waves — became a brass machine you could crank to predict the tide in any harbour on Earth.
+        </div>
+
+        <details class="physics reveal">
+          <summary>The physics — the tide-predicting machine</summary>
+          <p>The tide at a given port is, to good approximation, a sum of independent sinusoidal "constituents" — one driven by the Moon's dominant pull, one by the Sun, others by the small elliptical wobbles of each orbit — each with its own fixed period and a locally measured amplitude:</p>
+          <div class="eq"><span>h(t) = ΣA<sub>i</sub>cos(2πt⁄T<sub>i</sub> + φ<sub>i</sub>)</span></div>
+          <p>Kelvin's machine synthesised that sum mechanically, one pulley per constituent, decades before anyone had an electronic computer to add sine waves for them. Below, with only M2 raised (the Moon's main constituent, period 12.42 h) and S2 (the Sun's, period 12.00 h) — two frequencies close enough together to beat against each other — a slow spring/neap rhythm appears in the sum that neither constituent has on its own.</p>
+        </details>
+
+        <div class="lab reveal">
+          <div class="lab-canvas-wrap">
+            <canvas id="tides-canvas" aria-label="Six small rotating wheels, one per tidal constituent, above a chart of their summed tide height traced over thirty days; with only the two strongest constituents raised, a slow beat pattern is visible in the curve."></canvas>
+          </div>
+          <div class="controls">
+            <div class="control">
+              <label for="tide-m2">M2 · lunar <span class="control-value" id="tide-m2-value">1.00</span></label>
+              <input type="range" id="tide-m2" min="0" max="1.5" step="0.01" value="1.00">
+            </div>
+            <div class="control">
+              <label for="tide-s2">S2 · solar <span class="control-value" id="tide-s2-value">0.46</span></label>
+              <input type="range" id="tide-s2" min="0" max="1.5" step="0.01" value="0.46">
+            </div>
+            <div class="control">
+              <label for="tide-n2">N2 · lunar elliptic <span class="control-value" id="tide-n2-value">0.00</span></label>
+              <input type="range" id="tide-n2" min="0" max="1.5" step="0.01" value="0">
+            </div>
+            <div class="control">
+              <label for="tide-k1">K1 · lunisolar <span class="control-value" id="tide-k1-value">0.00</span></label>
+              <input type="range" id="tide-k1" min="0" max="1.5" step="0.01" value="0">
+            </div>
+            <div class="control">
+              <label for="tide-o1">O1 · lunar diurnal <span class="control-value" id="tide-o1-value">0.00</span></label>
+              <input type="range" id="tide-o1" min="0" max="1.5" step="0.01" value="0">
+            </div>
+            <div class="control">
+              <label for="tide-p1">P1 · solar diurnal <span class="control-value" id="tide-p1-value">0.00</span></label>
+              <input type="range" id="tide-p1" min="0" max="1.5" step="0.01" value="0">
+            </div>
+          </div>
+        </div>
+        <p class="lab-summary">What this shows: KelvinPhysics.tideSum of the six real tidal constituents, traced over 30 days. With only M2 and S2 raised (the default above), the spring/neap envelope emerges entirely from two steady sine waves at close frequencies — KelvinPhysics.beatPeriod puts that cycle at <span id="tide-beat">14.77</span> days, matching the real ≈14.77-day spring/neap cycle. Raise the other four constituents to see the curve gain the finer texture of a real tide table.</p>
+
+        <div class="grid-2 reveal">
+          <div class="figure">
+            <img src="images/brass-gear-mechanism.jpg" alt="A brass geared mechanism, evoking the tide-predicting machine's pulleys" width="1600" height="895" loading="lazy">
+            <p class="figcap">Illustration.</p>
+          </div>
+          <div class="figure">
+            <img src="images/tide-predicting-machine.jpg" alt="Contemporary engraving of Kelvin's tide-predicting machine" width="1200" height="1195" loading="lazy">
+            <p class="figcap">Historical illustration — a contemporary depiction of Kelvin's tide-predicting machine, reduced to four constituents. Public domain, Wikimedia Commons.</p>
+          </div>
+        </div>
+        <!-- /PHASE 2 -->
       </div>
     </section>
 

@@ -364,6 +364,7 @@ input[type=range]:focus-visible{outline:2px solid var(--chapter-accent);outline-
   letter-spacing:.12em;text-transform:uppercase;color:var(--chapter-accent);
   border:1px solid currentColor;padding:.25rem .6rem;opacity:.9;
 }
+.card>.tag{margin-bottom:.8rem}
 
 /* ---------- scroll reveal ---------- */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
@@ -408,4 +409,59 @@ input[type=range]:focus-visible{outline:2px solid var(--chapter-accent);outline-
   body.print-refs-only .hero,
   body.print-refs-only .chapter{display:none!important}
   body.print-refs-only #ch15{display:block!important}
+}
+
+/* =================================================================
+   PHASE 2 — chapter-interactive helpers (ch03-07: thermometer,
+   gaslaw, carnot, joulethomson, cable, galvanometer, waterdropper,
+   tides). Tokens only, appended at the end per house convention.
+   ================================================================= */
+
+/* accessible text summary paired with every .lab canvas */
+.lab-summary{
+  font-family:var(--font-mono);font-size:.72rem;line-height:1.65;color:var(--stone);
+  max-width:56rem;margin:-1rem 0 2.4rem;
+}
+
+/* small inline note beneath a readout (e.g. "no engine possible") */
+.inline-note{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.02em;color:var(--ember);margin:.4rem 0 0}
+
+/* generic action button inside a .lab (Send pulse, Play message…) */
+.btn-lab{
+  font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink);background:var(--chapter-accent);border:1px solid var(--chapter-accent);
+  padding:.65rem 1.1rem;cursor:pointer;align-self:flex-start;
+  transition:opacity .2s var(--ease),transform .2s var(--ease);
+}
+.btn-lab:hover{opacity:.85}
+.btn-lab:active{transform:scale(.97)}
+.btn-lab:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+/* landmark / preset jump buttons (ch03 absolute thermometer) */
+.landmark-row{display:flex;flex-wrap:wrap;gap:.4rem}
+.landmark-btn{font-family:var(--font-mono);background:transparent;cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease)}
+.landmark-btn:hover{background:var(--chapter-accent);color:var(--ink)}
+
+/* simultaneous K / °C / °F readout row */
+.readout-trio{display:flex;flex-wrap:wrap;gap:1.4rem 2rem;margin-bottom:.4rem}
+.readout-trio>div{display:flex;flex-direction:column;gap:.2rem}
+.readout-trio .readout-label{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--stone)}
+
+/* vertical-on-desktop / horizontal-on-narrow scale slider (ch03) */
+.scale-track{height:260px;display:flex;align-items:center;justify-content:center}
+.scale-track input[type=range]{width:220px;transform:rotate(-90deg)}
+@media(max-width:760px){
+  .scale-track{height:auto;padding:.5rem 0}
+  .scale-track input[type=range]{width:100%;transform:none}
+}
+
+/* Joule-Thomson COOLING / HEATING state label */
+.jt-state{font-family:var(--font-mono);letter-spacing:.08em}
+.jt-state.jt-cooling{color:var(--cyan)}
+.jt-state.jt-heating{color:var(--ember)}
+
+/* live-decoded Morse transcript (ch06 mirror galvanometer) */
+.transcript{
+  font-family:var(--font-mono);font-size:.95rem;letter-spacing:.14em;
+  color:var(--chapter-accent);min-height:1.6em;padding:.5rem 0;word-break:break-word;
 }
