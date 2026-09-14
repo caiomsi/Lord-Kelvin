@@ -578,3 +578,90 @@ input[type=range]:focus-visible{outline:2px solid var(--chapter-accent);outline-
 /* A lab whose visual needs the full column width (ch12's network):
    one column, controls below the figure rather than beside it. */
 .lab.lab-wide{grid-template-columns:1fr}
+
+/* =================================================================
+   PRESENTER MODE
+   A curated ~4:20 route for a timed 3-5 minute talk. Bottom bar with
+   talking points and a run clock; Q&A sheet over the top; and a
+   projector-safe treatment of the page itself.
+   ================================================================= */
+.pres-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:900;
+  display:grid;grid-template-columns:minmax(180px,1fr) 2.2fr auto;
+  gap:1.4rem;align-items:start;
+  padding:.9rem clamp(1rem,3vw,2rem);
+  background:rgba(7,10,14,.96);border-top:1px solid var(--brass-dim);
+  backdrop-filter:blur(8px);
+}
+.pres-left{display:flex;flex-direction:column;gap:.3rem;min-width:0}
+.pres-step{
+  font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;
+  color:var(--brass);
+}
+.pres-title{font-family:var(--font-display);font-size:1.02rem;color:var(--ivory);line-height:1.25}
+.pres-points{margin:0;padding-left:1.1rem;list-style:disc}
+.pres-points li{
+  color:var(--parchment);font-size:.92rem;line-height:1.45;margin-bottom:.28rem;
+}
+.pres-right{display:flex;align-items:center;gap:.55rem;white-space:nowrap}
+.pres-clock{font-family:var(--font-mono);font-size:1.5rem;color:var(--brass-bright)}
+.pres-clock.is-warn{color:#e0b44a}
+.pres-clock.is-over{color:var(--ember)}
+.pres-target{font-family:var(--font-mono);font-size:.78rem;color:var(--stone)}
+.pres-nav{display:flex;gap:.35rem;margin-left:.5rem}
+.pres-nav button{
+  cursor:pointer;background:var(--ink-surface);color:var(--parchment);
+  border:1px solid var(--line);padding:.35rem .55rem;
+  font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;
+  transition:border-color .2s var(--ease),color .2s var(--ease);
+}
+.pres-nav button:hover{border-color:var(--brass);color:var(--ivory)}
+
+.pres-sheet{
+  position:fixed;inset:0;z-index:950;overflow-y:auto;
+  background:rgba(7,10,14,.985);padding:clamp(1.5rem,5vw,3rem);
+}
+.pres-sheet-inner{max-width:1100px;margin:0 auto;padding-bottom:6rem}
+.pres-sheet h2{
+  font-family:var(--font-display);font-size:clamp(1.4rem,3vw,2rem);
+  color:var(--ivory);margin:0 0 1.6rem;
+}
+.pres-sheet h3{
+  font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--brass);font-weight:400;
+  margin:1.9rem 0 .7rem;
+}
+.pres-sheet dl{margin:0;display:grid;grid-template-columns:minmax(160px,.8fr) 2fr;gap:.45rem 1.4rem}
+.pres-sheet dt{color:var(--ivory);font-size:.9rem;font-weight:600}
+.pres-sheet dd{margin:0;color:var(--parchment);font-size:.9rem;line-height:1.6}
+.pres-sheet-hint{
+  margin-top:2.5rem;font-family:var(--font-mono);font-size:.72rem;
+  letter-spacing:.12em;color:var(--stone);
+}
+
+/* --- the page itself, while presenting --- */
+body.presenting{padding-bottom:12rem}
+body.presenting::after{display:none}            /* grain off for projectors */
+body.presenting .rail{display:none}
+body.presenting .prose,
+body.presenting details.physics,
+body.presenting .figure,
+body.presenting .lab-summary,
+body.presenting .sources-list,
+body.presenting .tl-list,
+body.presenting .pullquote{display:none}         /* nothing to read aloud */
+body.presenting .chapter{padding-block:clamp(2rem,4vw,3rem)}
+body.presenting .chapter-title{font-size:clamp(2rem,5vw,3.4rem)}
+body.presenting .lede{font-size:clamp(1.1rem,2.2vw,1.5rem);color:var(--ivory)}
+body.presenting .readout-lg{font-size:clamp(2.4rem,6vw,4rem)}
+body.presenting .control label,
+body.presenting .figcap{font-size:.85rem}
+
+@media(max-width:900px){
+  .pres-bar{grid-template-columns:1fr;gap:.6rem}
+  .pres-points{display:none}
+  .pres-right{justify-content:space-between}
+  .pres-sheet dl{grid-template-columns:1fr;gap:.2rem 0}
+  .pres-sheet dd{margin-bottom:.8rem}
+}
+@media print{ .pres-bar,.pres-sheet{display:none!important} }
