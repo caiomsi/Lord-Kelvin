@@ -665,3 +665,15 @@ body.presenting .figcap{font-size:.85rem}
   .pres-sheet dd{margin-bottom:.8rem}
 }
 @media print{ .pres-bar,.pres-sheet{display:none!important} }
+
+/* Mobile fallback for the ch12 network. This deliberately duplicates
+   what the JS .is-stacked class does: the radial layout depends on JS
+   having measured the box, and if that runs before the element has a
+   size the absolutely-positioned nodes escape their container. The
+   media query makes the narrow case correct without JS. */
+@media(max-width:760px){
+  .peers-net{aspect-ratio:auto;min-height:0;padding:0;border:0;background:none;overflow:visible}
+  .peers-net canvas,.peers-net .peers-hub{display:none}
+  .peers-net .peers-nodes{display:flex;flex-wrap:wrap;gap:.4rem}
+  .peers-net .peer-node{position:static!important;transform:none!important;left:auto!important;top:auto!important}
+}

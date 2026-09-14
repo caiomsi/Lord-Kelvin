@@ -67,8 +67,11 @@
 
   function layout() {
     var w = net.clientWidth, h = net.clientHeight;
-    if (!w || !h) return;
-    var stacked = w < 700;
+    /* Match the CSS breakpoint, and fall back to the stacked layout
+       when the box has not been measured yet — never leave the nodes
+       absolutely positioned with no coordinates, which lets them
+       escape the container. */
+    var stacked = (!w || !h) ? true : (w < 760);
     for (var i = 0; i < nodes.length; i++) {
       if (stacked) { nodes[i].style.left = ''; nodes[i].style.top = ''; continue; }
       var a = (i / nodes.length) * Math.PI * 2 - Math.PI / 2;
