@@ -40,10 +40,22 @@
   var ivory = cssVar('--ivory', '#f0ece3');
   var stone = cssVar('--stone', '#8b8579');
   var ink = cssVar('--ink', '#070a0e');
+  var lineColor = cssVar('--line', 'rgba(240,236,227,.12)');
 
   var R_PER_M = 0.002;   // ohm/m  (~2 ohm/km)
   var C_PER_M = 4e-10;   // F/m    (~0.4 uF/km)
-  var SIM_WALL_MS = 3000; // animation always plays over ~3s regardless of length
+  var SIM_WALL_MS = 3000; // animation always plays over ~3s of wall clock
+
+  /* The simulated physical time span is deliberately FIXED — set by the
+     longest cable the slider offers — instead of being scaled by the
+     selected length. Scaling it by the length was a bug: with x measured
+     as a fraction of L and t scaled by L^2, the length cancels out of
+     erfc(x*sqrt(rc/4t)) exactly, so every cable drew an identical curve
+     and the law of squares was invisible. Holding the window fixed means
+     a short cable saturates almost at once while a long one is still
+     crawling — which is the whole point. */
+  var L_MAX_M = 6000 * 1000;
+  var SIM_T_MAX = 3 * Physics.cableDelay(L_MAX_M, R_PER_M, C_PER_M);
 
   function now() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
 
@@ -82,7 +94,7 @@
     ctx.fillStyle = ink;
     ctx.fillRect(0, 0, w, h);
 
-    ctx.strokeStyle = cssVar('--line', 'rgba(240,236,227,.12)');
+    ctx.strokeStyle = lineColor;
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(plotL, baseline + 0.5);
@@ -145,10 +157,9 @@
   }
 
   function send() {
-    var delay = delaySeconds();
     if (Engine.reducedMotion()) {
       phaseState = 'arrived';
-      draw(3 * delay);
+      draw(SIM_T_MAX);
       return;
     }
     phaseState = 'sending';
@@ -162,14 +173,15 @@
   function init() { draw(0); }
   function resize() { draw(0); }
   function frame() {
-    if (phaseState !== 'sending') { draw(phaseState === 'arrived' ? 3 * delaySeconds() : 0); return; }
-    var delay = delaySeconds();
+    /* nothing moves unless a pulse is in flight — idle and arrived are
+       already on screen, so don't repaint them 60x a second */
+    if (phaseState !== 'sending') return;
     var elapsed = now() - tStart;
-    var simT = (elapsed / SIM_WALL_MS) * (3 * delay);
+    var simT = (elapsed / SIM_WALL_MS) * SIM_T_MAX;
     if (elapsed >= SIM_WALL_MS) {
       phaseState = 'arrived';
       if (sendBtn) sendBtn.disabled = false;
-      simT = 3 * delay;
+      simT = SIM_T_MAX;
     }
     draw(simT);
   }

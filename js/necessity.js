@@ -78,6 +78,10 @@
   lab.addEventListener('keydown', function (e) {
     if (selected < 0) return;
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    /* presenter mode binds the same keys on document to move between
+       stops — don't let one press both change the selection and jump
+       the talk */
+    e.stopPropagation();
     var next = selected + (e.key === 'ArrowRight' ? 1 : -1);
     if (next < 0 || next >= WORKS.length) return;
     e.preventDefault();

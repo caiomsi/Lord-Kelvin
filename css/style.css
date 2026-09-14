@@ -17,6 +17,7 @@
   --ink:#070a0e;              /* base — instrument lacquer */
   --ink-raised:#0d1117;       /* alternating panels, cards */
   --ink-surface:#141b24;      /* details/lab panels, inputs */
+  --ink-hi:#1b222a;           /* selected/raised state above --ink-surface */
 
   /* ---- accent: brass (primary — engineering, cable, instruments) ---- */
   --brass:#c9a14a;
@@ -66,6 +67,11 @@
 
 /* ---------- reset ---------- */
 *{box-sizing:border-box}
+/* An author `display` declaration beats the user-agent [hidden] rule
+   regardless of specificity, so anything toggled via the hidden
+   attribute (the presenter bar, the Q&A sheet) needs this or it is
+   visible on every page load. */
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{
   margin:0;background:var(--ink);color:var(--parchment);

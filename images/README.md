@@ -34,18 +34,18 @@ None depicts a real person or a documented event. Caption each as "Illustration"
 
 | File | Used for | Subject |
 |---|---|---|
-| `hero-frozen-particles.jpg` | hero | Frozen crystalline particles in a void |
+| `hero-frozen-particles.jpg` | source of the social card (the hero itself is a live canvas) | Frozen crystalline particles in a void |
 | `frost-crystals.jpg` | ch. 03 absolute zero | Frost on dark glass |
 | `steam-engine-detail.jpg` | ch. 04 second law | Victorian steam engine detail |
 | `cable-ocean-floor.jpg` | ch. 06 the cable | A cable across an abyssal plain |
 | `instrument-workbench.jpg` | ch. 07 instruments | Victorian instrument-maker's bench |
 | `brass-gear-mechanism.jpg` | ch. 07 tide machine | Brass geared mechanism |
-| `brass-scale-macro.jpg` | dividers / texture | Engraved brass measuring scale |
 | `earth-strata-heat.jpg` | ch. 08 age of the Earth | Geological strata with deep heat |
 | `two-clouds-sea.jpg` | ch. 09 two clouds | Two clouds over a dusk sea |
 | `victorian-industrial-city.jpg` | ch. 02 the world | Victorian industrial city at dusk |
 | `lecture-theatre.jpg` | ch. 01 education | Empty Victorian lecture theatre |
 | `cathedral-interior.jpg` | ch. 13 legacy | Gothic cathedral interior |
+| `social-share.jpg` | Open Graph / Twitter card only — never rendered on the page | Derived from `hero-frozen-particles.jpg`, resized to 1200×630 |
 
 ## Processing
 All images resized to ≤ 1600 px on the long edge and saved as JPEG via `sips`.

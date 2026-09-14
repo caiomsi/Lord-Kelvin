@@ -59,6 +59,6 @@ quotation has no primary source and is almost certainly not his.
 ## Images
 
 Six are genuine public-domain historical images, credited individually in the
-bibliography. The twelve atmospheric plates are AI-generated illustrations, captioned
-as such wherever they appear; none depicts a real person or a documented event. See
-`images/README.md`.
+bibliography. Eleven are AI-generated illustrations — ten captioned "Illustration"
+where they appear, plus the social-sharing card, which never appears on the page.
+None depicts a real person or a documented event. See `images/README.md`.

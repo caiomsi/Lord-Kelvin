@@ -44,6 +44,7 @@
   var stone = cssVar('--stone', '#8b8579');
   var ink = cssVar('--ink', '#070a0e');
   var line = cssVar('--line', 'rgba(240,236,227,.12)');
+  var inkSurface = cssVar('--ink-surface', '#141b24');
 
   // Nitrogen, van der Waals constants (SI).
   var A = 0.1408, B = 3.913e-5, CP = 29.1;
@@ -107,7 +108,7 @@
     ctx.save();
     ctx.globalAlpha = 0.8;
     var plugW = Math.max(10, w * 0.02);
-    ctx.fillStyle = cssVar('--ink-surface', '#141b24');
+    ctx.fillStyle = inkSurface;
     ctx.fillRect(plugX - plugW / 2, 0, plugW, h);
     ctx.strokeRect(plugX - plugW / 2, 0, plugW, h);
     ctx.fillStyle = stone;

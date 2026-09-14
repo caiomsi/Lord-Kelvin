@@ -43,6 +43,7 @@
   var ivory = cssVar('--ivory', '#f0ece3');
   var stone = cssVar('--stone', '#8b8579');
   var ink = cssVar('--ink', '#070a0e');
+  var lineColor = cssVar('--line', 'rgba(240,236,227,.12)');
 
   var SENSITIVITY = 0.003;   // rad per microamp (illustrative)
   var ARM_LENGTH = 300;      // px (illustrative — the "long lever arm")
@@ -109,7 +110,7 @@
     // zero reference
     ctx.save();
     ctx.setLineDash([3, 4]);
-    ctx.strokeStyle = cssVar('--line', 'rgba(240,236,227,.12)');
+    ctx.strokeStyle = lineColor;
     ctx.beginPath();
     ctx.moveTo(mirrorX, midY);
     ctx.lineTo(scaleX, midY);
@@ -208,8 +209,15 @@
   function init() { draw(0); }
   function resize() { draw(playing ? 0 : manualCurrent()); }
 
+  var lastIdleCurrent = null;
   function frame() {
-    if (!playing) { draw(manualCurrent()); return; }
+    if (!playing) {
+      /* idle: only repaint when the manual current actually changed */
+      var cNow = manualCurrent();
+      if (cNow !== lastIdleCurrent) { lastIdleCurrent = cNow; draw(cNow); }
+      return;
+    }
+    lastIdleCurrent = null;
     var elapsed = now() - playStart;
     if (elapsed >= TIMELINE.total) { stopPlay(); return; }
     var on = isOnAt(elapsed);

@@ -34,6 +34,7 @@
   var lineColor = cssVar('--line', 'rgba(240,236,227,.12)');
   var stoneColor = cssVar('--stone', '#8b8579');
   var ivoryColor = cssVar('--ivory', '#f0ece3');
+  var inkColor = cssVar('--ink', '#070a0e');
 
   var BASE_SLOPES = [0.55, 0.85, 1.15, 1.5];
   var T_MIN = -300, T_MAX = 400, T_SOLID_FROM = -50, T_ZERO = Physics.ABS_ZERO_C;
@@ -66,7 +67,7 @@
     function xPix(t) { return plotL + (t - T_MIN) / (T_MAX - T_MIN) * (plotR - plotL); }
     function yPix(v) { return plotB - (v / vMax) * (plotB - plotT); }
 
-    ctx.fillStyle = cssVar('--ink', '#070a0e');
+    ctx.fillStyle = inkColor;
     ctx.fillRect(0, 0, w, h);
 
     // axis (V = 0 line) + intercept guide
@@ -135,9 +136,18 @@
     scaleInput.addEventListener('input', draw);
   }
 
-  function init() { draw(); }
+  function init() {
+    /* Without an rAF loop this module gets exactly one paint, so it must
+       repaint after setupCanvas's ResizeObserver refits (and clears) the
+       bitmap — otherwise the chart is blank on load. */
+    if (state) state.onFit = draw;
+    draw();
+  }
   function resize() { draw(); }
   function frame() { draw(); }
 
-  Engine.register(canvas, { init: init, frame: frame, resize: resize });
+  /* No frame(): this chart only changes when a control moves, so it
+     redraws from the input handler and from stage.onFit instead of
+     repainting 60x a second forever. */
+  Engine.register(canvas, { init: init, resize: resize });
 })();

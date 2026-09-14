@@ -37,6 +37,8 @@
   var stone = cssVar('--stone', '#8b8579');
   var ink = cssVar('--ink', '#070a0e');
   var cyan = cssVar('--cyan', '#6fd3e8');
+  var lineColor = cssVar('--line', 'rgba(240,236,227,.12)');
+  var inkSurface = inkSurface;
 
   var TAU_MAX = 3.5, TAU_MIN = 0.9, V_THRESHOLD = 9, SPARK_MS = 220;
   var simTime = 0, sparkRemaining = 0;
@@ -94,7 +96,7 @@
 
     // voltage bar
     var barW = w - 24, barFrac = Physics.clamp(Vd / V_THRESHOLD, 0, 1);
-    ctx.strokeStyle = cssVar('--line', 'rgba(240,236,227,.12)');
+    ctx.strokeStyle = lineColor;
     ctx.strokeRect(12, 8, barW, 6);
     ctx.fillStyle = sparkRemaining > 0 ? brassBright : cyan;
     ctx.fillRect(12, 8, barW * barFrac, 6);
@@ -124,7 +126,7 @@
       ctx.beginPath();
       ctx.ellipse(x, L.ringY, 15, 6, 0, 0, Math.PI * 2);
       ctx.stroke();
-      ctx.fillStyle = cssVar('--ink-surface', '#141b24');
+      ctx.fillStyle = inkSurface;
       ctx.strokeStyle = brass;
       ctx.fillRect(x - 20, L.canTopY, 40, L.canBotY - L.canTopY);
       ctx.strokeRect(x - 20, L.canTopY, 40, L.canBotY - L.canTopY);
@@ -161,9 +163,40 @@
     ctx.textAlign = 'left';
   }
 
-  if (rateInput) rateInput.addEventListener('input', function () { draw(0); });
+  if (rateInput) rateInput.addEventListener('input', function () {
+    /* under reduced motion nothing advances on its own, so re-seed the
+       still life at the new rate — otherwise the slider only changes a
+       label */
+    if (Engine.reducedMotion()) seedStatic();
+    draw(0);
+  });
 
-  function init() { draw(0); }
+  function init() {
+    /* Under reduced motion the engine calls frame(0) exactly once, and
+       draw() only advances anything when dtMs is truthy — so without
+       this the whole apparatus sits at zero charge with no droplets
+       forever. Seed a representative mid-charge state instead, and let
+       the drop-rate slider keep re-seeding it so the control still does
+       something visible. */
+    if (Engine.reducedMotion()) seedStatic();
+    draw(0);
+  }
+
+  /* a still life: charge most of the way to the spark, with the two
+     streams populated down their fall */
+  function seedStatic() {
+    simTime = tau() * Math.log(1 + V_THRESHOLD * 0.72);
+    sparkRemaining = 0;
+    drops.length = 0;
+    if (!state) return;
+    var L = layout(state.w, state.h);
+    for (var i = 0; i < 7; i++) {
+      var f = i / 7;
+      var y = L.nozzleY + f * (L.canTopY - L.nozzleY);
+      drops.push({ x: L.leftX, y: y, side: 'L' });
+      drops.push({ x: L.rightX, y: y, side: 'R' });
+    }
+  }
   function resize() { draw(0); }
   function frame(dt) { draw(dt || 0); }
 

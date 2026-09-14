@@ -123,7 +123,7 @@
   <main>
 
     <section class="hero" id="hero">
-      <canvas id="hero-canvas" aria-label="Ambient particle field of molecules whose speed cools toward absolute zero"></canvas>
+      <canvas role="img" id="hero-canvas" aria-label="Ambient particle field of molecules whose speed cools toward absolute zero"></canvas>
       <div class="container hero-inner">
         <p class="hero-kicker kicker">William Thomson · 1824–1907</p>
         <h1 class="hero-title">KELVIN</h1>
@@ -284,11 +284,11 @@
 
         <div class="lab reveal">
           <div class="lab-canvas-wrap">
-            <canvas id="therm-canvas" aria-label="Nitrogen molecules drifting at a speed set by the selected temperature; they slow and freeze in place as the temperature approaches absolute zero."></canvas>
+            <canvas role="img" id="therm-canvas" aria-label="Nitrogen molecules drifting at a speed set by the selected temperature; they slow and freeze in place as the temperature approaches absolute zero."></canvas>
           </div>
           <div class="controls">
             <div class="readout-trio">
-              <div><span class="readout-label">Kelvin</span><span class="readout" id="therm-k">300.0</span></div>
+              <div><span class="readout-label">Kelvin</span><span class="readout" id="therm-k">300</span></div>
               <div><span class="readout-label">Celsius</span><span class="readout" id="therm-c">26.9</span></div>
               <div><span class="readout-label">Fahrenheit</span><span class="readout" id="therm-f">80.3</span></div>
             </div>
@@ -319,7 +319,7 @@
 
         <div class="lab reveal">
           <div class="lab-canvas-wrap">
-            <canvas id="gaslaw-canvas" aria-label="Chart of gas volume against temperature in Celsius for four gas samples, each a straight line, all extrapolating to zero volume at the same temperature."></canvas>
+            <canvas role="img" id="gaslaw-canvas" aria-label="Chart of gas volume against temperature in Celsius for four gas samples, each a straight line, all extrapolating to zero volume at the same temperature."></canvas>
           </div>
           <div class="controls">
             <div class="control">
@@ -379,7 +379,7 @@
 
         <div class="lab reveal">
           <div class="lab-canvas-wrap">
-            <canvas id="carnot-canvas" aria-label="Diagram of a Carnot engine: heat flows in from a hot reservoir on the left, splits into work out the top and waste heat into a cold reservoir on the right, with arrow widths proportional to each flow."></canvas>
+            <canvas role="img" id="carnot-canvas" aria-label="Diagram of a Carnot engine: heat flows in from a hot reservoir on the left, splits into work out the top and waste heat into a cold reservoir on the right, with arrow widths proportional to each flow."></canvas>
           </div>
           <div class="controls">
             <div class="control">
@@ -438,7 +438,7 @@
 
         <div class="lab reveal">
           <div class="lab-canvas-wrap">
-            <canvas id="jt-canvas" aria-label="Gas particles flowing left to right through a porous plug; they visibly slow down or speed up after crossing it, depending on whether the gas is cooling or heating."></canvas>
+            <canvas role="img" id="jt-canvas" aria-label="Gas particles flowing left to right through a porous plug; they visibly slow down or speed up after crossing it, depending on whether the gas is cooling or heating."></canvas>
           </div>
           <div class="controls">
             <div class="control">
@@ -491,7 +491,7 @@
 
         <div class="lab reveal">
           <div class="lab-canvas-wrap">
-            <canvas id="cable-canvas" aria-label="Chart of signal strength along the cable's length after pressing Send; the rising curve smears and flattens the farther the signal has to travel."></canvas>
+            <canvas role="img" id="cable-canvas" aria-label="Chart of signal strength along the cable's length after pressing Send; the rising curve smears and flattens the farther the signal has to travel."></canvas>
           </div>
           <div class="controls">
             <div class="control">
@@ -520,7 +520,7 @@
 
         <div class="lab reveal">
           <div class="lab-canvas-wrap">
-            <canvas id="galv-canvas" aria-label="Diagram of a beam of light reflecting off a small tilting mirror onto a distant scale; the reflected spot swings with the applied current."></canvas>
+            <canvas role="img" id="galv-canvas" aria-label="Diagram of a beam of light reflecting off a small tilting mirror onto a distant scale; the reflected spot swings with the applied current."></canvas>
           </div>
           <div class="controls">
             <div class="control">
@@ -588,7 +588,7 @@
 
         <div class="lab reveal">
           <div class="lab-canvas-wrap">
-            <canvas id="dropper-canvas" aria-label="Two streams of water droplets falling through induction rings into collecting cans that are cross-wired to the opposite side; a voltage bar climbs and a spark discharges it periodically."></canvas>
+            <canvas role="img" id="dropper-canvas" aria-label="Two streams of water droplets falling through induction rings into collecting cans that are cross-wired to the opposite side; a voltage bar climbs and a spark discharges it periodically."></canvas>
           </div>
           <div class="controls">
             <div class="control">
@@ -616,7 +616,7 @@
 
         <div class="lab reveal">
           <div class="lab-canvas-wrap">
-            <canvas id="tides-canvas" aria-label="Six small rotating wheels, one per tidal constituent, above a chart of their summed tide height traced over thirty days; with only the two strongest constituents raised, a slow beat pattern is visible in the curve."></canvas>
+            <canvas role="img" id="tides-canvas" aria-label="Six small rotating wheels, one per tidal constituent, above a chart of their summed tide height traced over thirty days; with only the two strongest constituents raised, a slow beat pattern is visible in the curve."></canvas>
           </div>
           <div class="controls">
             <div class="control">
@@ -690,7 +690,7 @@
 
         <div class="lab reveal" id="earthage-lab">
           <div class="lab-canvas-wrap">
-            <canvas id="earthage-canvas" aria-label="Bar chart comparing three estimates of the age of the Earth, drawn to scale: Kelvin's calculated answer, Perry's 1895 convecting-interior result, and the modern radiometric age of 4.54 billion years."></canvas>
+            <canvas role="img" id="earthage-canvas" aria-label="Bar chart, drawn to scale, comparing Kelvin's calculated age of the Earth against the modern radiometric age of 4.54 billion years; Perry's 1895 convecting-interior result and a radiogenic correction are added when their checkboxes are ticked."></canvas>
           </div>
           <div class="controls">
             <div class="control">
@@ -761,7 +761,7 @@
           <p class="kicker">Act III · The limits</p>
           <h2 class="chapter-title">Two clouds</h2>
         </div>
-                <p class="lede reveal">On 27 April 1900 he stood up at the Royal Institution and said that physics was nearly finished — except for two small clouds. Both clouds became revolutions inside five years, and he had picked exactly the right two.</p>
+                <p class="lede reveal">On 27 April 1900 he stood up at the Royal Institution and named the two results his generation could not explain. Both clouds became revolutions inside five years, and he had picked exactly the right two.</p>
 
         <div class="prose reveal">
           <p>The lecture was titled <em>"Nineteenth Century Clouds over the Dynamical Theory of Heat and Light."</em> Kelvin was seventy-five. The dynamical theory — that heat and light are both modes of motion — was the great synthesis of his generation, and he opened by saying it had two problems left.</p>
@@ -799,7 +799,7 @@
 
         <div class="lab reveal" id="blackbody-lab">
           <div class="lab-canvas-wrap">
-            <canvas id="blackbody-canvas" aria-label="Chart of emitted intensity against wavelength. The Planck curve rises to a peak and falls away; the classical Rayleigh-Jeans curve tracks it at long wavelengths but runs off the top of the chart toward short wavelengths — the ultraviolet catastrophe."></canvas>
+            <canvas role="img" id="blackbody-canvas" aria-label="Chart of emitted intensity against wavelength. The Planck curve rises to a peak and falls away; the classical Rayleigh-Jeans curve tracks it at long wavelengths but runs off the top of the chart toward short wavelengths — the ultraviolet catastrophe."></canvas>
           </div>
           <div class="controls">
             <div class="control">
@@ -942,7 +942,7 @@
               <span class="readout" id="peer-kind">Select a name</span>
             </div>
             <p class="peer-name" id="peer-name"></p>
-            <p class="peer-text" id="peer-text" aria-live="polite">Twelve of the people who shaped his work, or were shaped by it. Four were friends, two were opponents, one was the student who turned out to be right, and one financed the cable that made him rich.</p>
+            <p class="peer-text" id="peer-text" aria-live="polite">Twelve of the people who shaped his work, or were shaped by it. Five were friendly, three were adversaries, one was the student who turned out to be right, and one financed the cable that made him rich.</p>
           </div>
         </div>
         <p class="lab-summary">What this shows: the working relationships behind the chapters above — Joule for the throttling effect, Field and Whitehouse for the cable, Perry and Rutherford for the age of the Earth, Darwin for the argument underneath all of it.</p>
@@ -1010,7 +1010,7 @@
 
         <div class="lab reveal" id="timeline-lab">
           <div class="lab-canvas-wrap timeline-wrap">
-            <canvas id="timeline-canvas" aria-label="A timeline from 1824 to 1907 with two tracks: events in Kelvin's life above, and contemporary events in science and the world below."></canvas>
+            <canvas role="img" id="timeline-canvas" aria-label="A timeline from 1824 to 1907 with two tracks: events in Kelvin's life above, and contemporary events in science and the world below."></canvas>
           </div>
           <div class="controls">
             <div class="control">
@@ -1082,7 +1082,7 @@
 
           <h3 class="sources-head">Image credits</h3>
           <p>Six images on this site are <strong>genuine public-domain historical material</strong> from Wikimedia Commons: the photographic portrait of Kelvin (Messrs. Dickinson, London); the <em>Vanity Fair</em> caricature by Leslie Ward, 29 April 1897; Thomson's mirror galvanometer; his early siphon recorder (<em>Encyclopædia Britannica</em>, 1911); the <em>Great Eastern</em>; and a contemporary illustration of the tide-predicting machine.</p>
-          <p>The twelve atmospheric plates — the frost, the ocean floor, the workbench, the clouds and the rest — are <strong>AI-generated illustrations</strong> made for this site, each captioned "Illustration" where it appears. None depicts a real person or a documented event, and none is presented as a historical record.</p>
+          <p>Eleven further images are <strong>AI-generated illustrations</strong> made for this site — the frost, the ocean floor, the workbench, the clouds and the rest. Ten appear in the chapters above, each captioned "Illustration"; the eleventh is the social-sharing card and never appears on the page. None depicts a real person or a documented event, and none is presented as a historical record.</p>
 
           <h3 class="sources-head">Where each assignment question is answered</h3>
           <table class="rubric-table">

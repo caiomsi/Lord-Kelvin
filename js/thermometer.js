@@ -190,8 +190,11 @@
 
   function init() {
     seedParticles();
-    currentK = posToTemp(parseFloat(range.value || '0'));
-    updateReadouts(currentK);
+    /* Start from an exact temperature rather than from the slider's
+       integer position: posToTemp(448) is 298.18 K, not 300, so reading
+       the slider made the readouts jump the moment the chapter scrolled
+       into view. setTemp writes the slider position back to match. */
+    setTemp(300);
   }
   function resize() {
     for (var i = 0; i < particles.length; i++) {
