@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Caio·MSI">
+
+  <title>Kelvin — The Absolute Scale</title>
+  <meta name="description" content="An immersive, interactive exploration of Lord Kelvin — absolute temperature, the Second Law of thermodynamics, the transatlantic cable, and the age of the Earth he got wrong. An AP Physics research project.">
+  <link rel="canonical" href="https://caiomsi.github.io/Lord-Kelvin/">
+  <meta name="theme-color" content="#070a0e">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kelvin — The Absolute Scale">
+  <meta property="og:description" content="The man who found the bottom of temperature. An immersive, interactive exploration of William Thomson's life and physics.">
+  <meta property="og:url" content="https://caiomsi.github.io/Lord-Kelvin/">
+  <meta property="og:site_name" content="Kelvin — The Absolute Scale">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://caiomsi.github.io/Lord-Kelvin/images/social-share.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Kelvin — The Absolute Scale">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kelvin — The Absolute Scale">
+  <meta name="twitter:description" content="The man who found the bottom of temperature. An immersive, interactive exploration of William Thomson's life and physics.">
+  <meta name="twitter:image" content="https://caiomsi.github.io/Lord-Kelvin/images/social-share.png">
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="mask-icon" href="favicon.svg" color="#c9a14a">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- ============================================================
+       Kelvin — The Absolute Scale. An immersive, interactive AP
+       Physics project on William Thomson, 1st Baron Kelvin.
+       Hosted at caiomsi.github.io/Lord-Kelvin.
+       ============================================================ -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "William Thomson, 1st Baron Kelvin",
+    "alternateName": "Lord Kelvin",
+    "birthDate": "1824-06-26",
+    "birthPlace": {
+      "@type": "Place",
+      "name": "Belfast, Ireland"
+    },
+    "deathDate": "1907-12-17",
+    "deathPlace": {
+      "@type": "Place",
+      "name": "Largs, Scotland"
+    },
+    "alumniOf": [
+      { "@type": "CollegeOrUniversity", "name": "University of Glasgow" },
+      { "@type": "CollegeOrUniversity", "name": "University of Cambridge" }
+    ],
+    "award": [
+      "Fellow of the Royal Society, 1851",
+      "Royal Medal, 1856",
+      "Knight Bachelor, 1866",
+      "Copley Medal, 1883",
+      "Baron Kelvin of Largs, 1892",
+      "Order of Merit, 1902"
+    ],
+    "sameAs": [
+      "https://en.wikipedia.org/wiki/William_Thomson,_1st_Baron_Kelvin",
+      "https://www.britannica.com/biography/William-Thomson-Baron-Kelvin"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Kelvin — The Absolute Scale",
+    "description": "An immersive, interactive exploration of Lord Kelvin — absolute temperature, the Second Law of thermodynamics, the transatlantic cable, and the age of the Earth he got wrong.",
+    "url": "https://caiomsi.github.io/Lord-Kelvin/",
+    "mainEntityOfPage": "https://caiomsi.github.io/Lord-Kelvin/",
+    "inLanguage": "en",
+    "author": { "@type": "Person", "name": "Caio·MSI" },
+    "about": { "@type": "Person", "name": "William Thomson, 1st Baron Kelvin" }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="wordmark">
+      <span class="wordmark-mark">Kelvin</span>
+      <span class="wordmark-sub">The Absolute Scale</span>
+    </div>
+    <button type="button" class="btn-presenter" id="presenter-toggle" aria-label="Enter presenter mode">Presenter</button>
+  </header>
+
+  <nav class="rail" aria-label="Chapters">
+    <span class="rail-line" aria-hidden="true"></span>
+    <span class="rail-fill" id="rail-fill" aria-hidden="true"></span>
+    <ol class="rail-ticks">
+      <li><a class="rail-tick" data-accent="brass" href="#ch01" aria-label="Chapter 01, Belfast to Glasgow, by way of a prodigy"><span class="rail-tick-mark"></span><span class="rail-tick-num">01</span></a></li>
+      <li><a class="rail-tick" data-accent="brass" href="#ch02" aria-label="Chapter 02, The world that made him"><span class="rail-tick-mark"></span><span class="rail-tick-num">02</span></a></li>
+      <li><a class="rail-tick" data-accent="cyan" href="#ch03" aria-label="Chapter 03, The scale with a bottom"><span class="rail-tick-mark"></span><span class="rail-tick-num">03</span></a></li>
+      <li><a class="rail-tick" data-accent="cyan" href="#ch04" aria-label="Chapter 04, The Second Law"><span class="rail-tick-mark"></span><span class="rail-tick-num">04</span></a></li>
+      <li><a class="rail-tick" data-accent="cyan" href="#ch05" aria-label="Chapter 05, Joule-Thomson"><span class="rail-tick-mark"></span><span class="rail-tick-num">05</span></a></li>
+      <li><a class="rail-tick" data-accent="brass" href="#ch06" aria-label="Chapter 06, 3,000 kilometers of copper"><span class="rail-tick-mark"></span><span class="rail-tick-num">06</span></a></li>
+      <li><a class="rail-tick" data-accent="brass" href="#ch07" aria-label="Chapter 07, The instruments"><span class="rail-tick-mark"></span><span class="rail-tick-num">07</span></a></li>
+      <li><a class="rail-tick" data-accent="ember" href="#ch08" aria-label="Chapter 08, Where Kelvin was wrong"><span class="rail-tick-mark"></span><span class="rail-tick-num">08</span></a></li>
+      <li><a class="rail-tick" data-accent="cyan" href="#ch09" aria-label="Chapter 09, Two clouds"><span class="rail-tick-mark"></span><span class="rail-tick-num">09</span></a></li>
+      <li><a class="rail-tick" data-accent="brass" href="#ch10" aria-label="Chapter 10, The quote he never said"><span class="rail-tick-mark"></span><span class="rail-tick-num">10</span></a></li>
+      <li><a class="rail-tick" data-accent="brass" href="#ch11" aria-label="Chapter 11, The man himself"><span class="rail-tick-mark"></span><span class="rail-tick-num">11</span></a></li>
+      <li><a class="rail-tick" data-accent="brass" href="#ch12" aria-label="Chapter 12, His circle"><span class="rail-tick-mark"></span><span class="rail-tick-num">12</span></a></li>
+      <li><a class="rail-tick" data-accent="brass" href="#ch13" aria-label="Chapter 13, Honours and legacy"><span class="rail-tick-mark"></span><span class="rail-tick-num">13</span></a></li>
+      <li><a class="rail-tick" data-accent="brass" href="#ch14" aria-label="Chapter 14, Timeline, 1824 to 1907"><span class="rail-tick-mark"></span><span class="rail-tick-num">14</span></a></li>
+      <li><a class="rail-tick" data-accent="brass" href="#ch15" aria-label="Chapter 15, Sources"><span class="rail-tick-mark"></span><span class="rail-tick-num">15</span></a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <section class="hero" id="hero">
+      <canvas id="hero-canvas" aria-label="Ambient particle field of molecules whose speed cools toward absolute zero"></canvas>
+      <div class="container hero-inner">
+        <p class="hero-kicker kicker">William Thomson · 1824–1907</p>
+        <h1 class="hero-title">KELVIN</h1>
+        <p class="hero-lede">The man who found the bottom of temperature</p>
+        <div class="hero-readout">
+          <span class="readout readout-lg" id="hero-temp"><span id="hero-temp-value">300.0</span><span class="readout-unit">K</span></span>
+          <span class="hero-readout-label">ambient temperature</span>
+        </div>
+      </div>
+      <div class="scroll-cue" aria-hidden="true">Scroll</div>
+    </section>
+
+    <section class="chapter" id="summary" data-accent="brass">
+      <div class="container">
+        <div class="summary-card card reveal">
+          <p class="kicker">Kelvin in 60 seconds</p>
+          <dl class="summary-facts">
+            <div><dt>Born</dt><dd>Belfast, 26 June 1824</dd></div>
+            <div><dt>Prodigy</dt><dd>Professor of Natural Philosophy at Glasgow — at age 22</dd></div>
+            <div><dt>Physics</dt><dd>Gave us absolute temperature and the kelvin itself</dd></div>
+            <div><dt>Law</dt><dd>Stated the Second Law of thermodynamics, 1852</dd></div>
+            <div><dt>Engineer</dt><dd>Made the transatlantic telegraph work — knighted for it in 1866</dd></div>
+            <div><dt>Wrong</dt><dd>Got the age of the Earth badly wrong, by a factor of ~50</dd></div>
+          </dl>
+          <p class="summary-note">Buried in Westminster Abbey, beside Newton.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch01" data-chapter="01" data-accent="brass">
+      <div class="container">
+        <div class="chapter-head">
+          <span class="folio">№ 01</span>
+          <p class="kicker">Act I · The making of a physicist</p>
+          <h2 class="chapter-title">Belfast to Glasgow, by way of a prodigy</h2>
+        </div>
+        <!-- PHASE 3 FILLS THIS -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch02" data-chapter="02" data-accent="brass">
+      <div class="container">
+        <div class="chapter-head">
+          <span class="folio">№ 02</span>
+          <p class="kicker">Act I · The making of a physicist</p>
+          <h2 class="chapter-title">The world that made him</h2>
+        </div>
+        <!-- PHASE 3 FILLS THIS -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch03" data-chapter="03" data-accent="cyan">
+      <div class="container">
+        <div class="chapter-head">
+          <span class="folio">№ 03</span>
+          <p class="kicker">Act II · The physics</p>
+          <h2 class="chapter-title">The scale with a bottom</h2>
+        </div>
+        <!-- PHASE 2 FILLS THIS -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch04" data-chapter="04" data-accent="cyan">
+      <div class="container">
+        <div class="chapter-head">
+          <span class="folio">№ 04</span>
+          <p class="kicker">Act II · The physics</p>
+          <h2 class="chapter-title">The Second Law</h2>
+        </div>
+        <!-- PHASE 2 FILLS THIS -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch05" data-chapter="05" data-accent="cyan">
+      <div class="container">
+        <div class="chapter-head">
+          <span class="folio">№ 05</span>
+          <p class="kicker">Act II · The physics</p>
+          <h2 class="chapter-title">Joule–Thomson</h2>
+        </div>
+        <!-- PHASE 2 FILLS THIS -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch06" data-chapter="06" data-accent="brass">
+      <div class="container">
+        <div class="chapter-head">
+          <span class="folio">№ 06</span>
+          <p class="kicker">Act II · The physics</p>
+          <h2 class="chapter-title">3,000 km of copper</h2>
+        </div>
+        <!-- PHASE 2 FILLS THIS -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch07" data-chapter="07" data-accent="brass">
+      <div class="container">
+        <div class="chapter-head">
+          <span class="folio">№ 07</span>
+          <p class="kicker">Act II · The physics</p>
+          <h2 class="chapter-title">The instruments</h2>
+        </div>
+        <!-- PHASE 2 FILLS THIS -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch08" data-chapter="08" data-accent="ember">
+      <div class="container">
+        <div class="chapter-head">
+          <span class="folio">№ 08</span>
+          <p class="kicker">Act III · The limits</p>
+          <h2 class="chapter-title">Where Kelvin was wrong</h2>
+        </div>
+        <!-- PHASE 3 FILLS THIS -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch09" data-chapter="09" data-accent="cyan">
+      <div class="container">
+        <div class="chapter-head">
+          <span class="folio">№ 09</span>
+          <p class="kicker">Act III · The limits</p>
+          <h2 class="chapter-title">Two clouds</h2>
+        </div>
+        <!-- PHASE 3 FILLS THIS -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch10" data-chapter="10" data-accent="brass">
+      <div class="container">
+        <div class="chapter-head">
+          <span class="folio">№ 10</span>
+          <p class="kicker">Act III · The limits</p>
+          <h2 class="chapter-title">The quote he never said</h2>
+        </div>
+        <!-- PHASE 3 FILLS THIS -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch11" data-chapter="11" data-accent="brass">
+      <div class="container">
+        <div class="chapter-head">
+          <span class="folio">№ 11</span>
+          <p class="kicker">Act IV · The man</p>
+          <h2 class="chapter-title">The man himself</h2>
+        </div>
+        <!-- PHASE 3 FILLS THIS -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch12" data-chapter="12" data-accent="brass">
+      <div class="container">
+        <div class="chapter-head">
+          <span class="folio">№ 12</span>
+          <p class="kicker">Act IV · The man</p>
+          <h2 class="chapter-title">His circle</h2>
+        </div>
+        <!-- PHASE 3 FILLS THIS -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch13" data-chapter="13" data-accent="brass">
+      <div class="container">
+        <div class="chapter-head">
+          <span class="folio">№ 13</span>
+          <p class="kicker">Act IV · The man</p>
+          <h2 class="chapter-title">Honours and legacy</h2>
+        </div>
+        <!-- PHASE 3 FILLS THIS -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch14" data-chapter="14" data-accent="brass">
+      <div class="container">
+        <div class="chapter-head">
+          <span class="folio">№ 14</span>
+          <p class="kicker">The full timeline</p>
+          <h2 class="chapter-title">Timeline, 1824–1907</h2>
+        </div>
+        <!-- PHASE 3 FILLS THIS -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch15" data-chapter="15" data-accent="brass">
+      <div class="container">
+        <div class="chapter-head">
+          <span class="folio">№ 15</span>
+          <p class="kicker">Sources &amp; references</p>
+          <h2 class="chapter-title">Sources</h2>
+        </div>
+        <!-- PHASE 3 FILLS THIS -->
+      </div>
+    </section>
+
+  </main>
+
+  <script src="js/physics.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/thermometer.js"></script>
+  <script src="js/gaslaw.js"></script>
+  <script src="js/carnot.js"></script>
+  <script src="js/joulethomson.js"></script>
+  <script src="js/cable.js"></script>
+  <script src="js/galvanometer.js"></script>
+  <script src="js/waterdropper.js"></script>
+  <script src="js/tides.js"></script>
+  <script src="js/earthage.js"></script>
+  <script src="js/blackbody.js"></script>
+  <script src="js/peers.js"></script>
+  <script src="js/timeline.js"></script>
+  <script src="js/presenter.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
