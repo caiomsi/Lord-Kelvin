@@ -298,18 +298,8 @@ details.physics p{color:var(--parchment);font-size:.95rem;line-height:1.7}
 .frac .num{padding:0 .15em .12em;border-bottom:1.5px solid currentColor}
 .frac .den{padding:.12em .15em 0}
 
-/* ---------- lab: interactive panel (canvas + controls) ---------- */
-.lab{
-  display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(1.2rem,3vw,2.2rem);
-  border:1px solid var(--line);background:var(--ink-raised);
-  padding:clamp(1.2rem,3vw,2rem);margin:2.2rem 0;align-items:start;
-}
-.lab-canvas-wrap{
-  position:relative;aspect-ratio:16/10;background:var(--ink);
-  border:1px solid var(--line-soft);overflow:hidden;
-}
-.lab-canvas-wrap canvas{width:100%;height:100%;display:block}
-.controls{display:flex;flex-direction:column;gap:1.15rem}
+/* ---------- slider controls ---------- */
+
 .control{display:flex;flex-direction:column;gap:.45rem}
 .control label{
   display:flex;justify-content:space-between;gap:.6rem;
@@ -333,8 +323,6 @@ input[type=range]::-moz-range-thumb{
 }
 input[type=range]::-moz-range-track{height:2px;background:var(--line);border:0}
 input[type=range]:focus-visible{outline:2px solid var(--chapter-accent);outline-offset:4px}
-
-@media(max-width:760px){.lab{grid-template-columns:1fr}}
 
 /* ---------- readouts ---------- */
 .readout{
@@ -362,8 +350,7 @@ input[type=range]:focus-visible{outline:2px solid var(--chapter-accent);outline-
 }
 
 /* ---------- grid / card / tag ---------- */
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.4rem,3.5vw,2.4rem)}
-@media(max-width:760px){.grid-2{grid-template-columns:1fr}}
+
 .card{border:1px solid var(--line);background:var(--ink-raised);padding:clamp(1.2rem,3vw,1.8rem)}
 .tag{
   display:inline-flex;align-items:center;font-family:var(--font-mono);font-size:.64rem;
@@ -380,7 +367,7 @@ input[type=range]:focus-visible{outline:2px solid var(--chapter-accent);outline-
 @media(max-width:480px){
   .container{padding:0 1.1rem}
   .chapter{padding:3rem 0}
-  .lab{padding:1rem}
+  
   .summary-facts>div{padding:.8rem 0}
   .hero-inner{padding:5rem 0 3rem}
 }
@@ -401,7 +388,7 @@ input[type=range]:focus-visible{outline:2px solid var(--chapter-accent);outline-
   *{box-shadow:none!important;text-shadow:none!important;background:transparent}
   html,body{background:#fff!important;color:#111!important;overflow:visible!important}
   body::after{display:none!important}
-  .topbar,.rail,.scroll-cue,#hero-canvas,.btn-presenter,.lab-canvas-wrap,.controls{display:none!important}
+  .topbar,.rail,.scroll-cue,#hero-canvas,.btn-presenter{display:none!important}
   .hero{min-height:0;padding:0}
   .chapter{border:0;padding:1rem 0;page-break-inside:avoid}
   .chapter-title,.lede,.prose,.kicker,.folio,.readout,.eq,dt,dd{color:#111!important}
@@ -409,30 +396,27 @@ input[type=range]:focus-visible{outline:2px solid var(--chapter-accent);outline-
   a{color:#111!important;text-decoration:underline}
   details.physics>summary::before{display:none}
   details.physics>*{display:block!important}
+  /* scroll-reveal content is invisible until scrolled into view, and
+     printing never scrolls — without this, printed pages come out
+     with headings and no body text */
+  .reveal{opacity:1!important;transform:none!important}
+  /* light-on-dark greys are near-invisible on white paper */
+  body *{color:#111!important}
+  /* experiments can't be driven on paper; the report is the text */
+  .exp,.btn-lab,.print-cta{display:none!important}
 
   body.print-refs-only .topbar,
   body.print-refs-only .rail,
   body.print-refs-only .hero,
   body.print-refs-only .chapter{display:none!important}
-  body.print-refs-only #ch15{display:block!important}
+  body.print-refs-only #ch11{display:block!important}
 }
 
-/* =================================================================
-   PHASE 2 — chapter-interactive helpers (ch03-07: thermometer,
-   gaslaw, carnot, joulethomson, cable, galvanometer, waterdropper,
-   tides). Tokens only, appended at the end per house convention.
-   ================================================================= */
-
-/* accessible text summary paired with every .lab canvas */
-.lab-summary{
-  font-family:var(--font-mono);font-size:.72rem;line-height:1.65;color:var(--stone);
-  max-width:56rem;margin:-1rem 0 2.4rem;
-}
-
-/* small inline note beneath a readout (e.g. "no engine possible") */
+/* small warning line inside an experiment (e.g. "no engine possible") */
 .inline-note{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.02em;color:var(--ember);margin:.4rem 0 0}
 
-/* generic action button inside a .lab (Send pulse, Play message…) */
+.print-cta{margin-bottom:2rem}
+/* solid action button ("Print reference page") */
 .btn-lab{
   font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
   color:var(--ink);background:var(--chapter-accent);border:1px solid var(--chapter-accent);
@@ -443,117 +427,7 @@ input[type=range]:focus-visible{outline:2px solid var(--chapter-accent);outline-
 .btn-lab:active{transform:scale(.97)}
 .btn-lab:disabled{opacity:.4;cursor:not-allowed;transform:none}
 
-/* landmark / preset jump buttons (ch03 absolute thermometer) */
-.landmark-row{display:flex;flex-wrap:wrap;gap:.4rem}
-.landmark-btn{font-family:var(--font-mono);background:transparent;cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease)}
-.landmark-btn:hover{background:var(--chapter-accent);color:var(--ink)}
-
-/* simultaneous K / °C / °F readout row */
-.readout-trio{display:flex;flex-wrap:wrap;gap:1.4rem 2rem;margin-bottom:.4rem}
-.readout-trio>div{display:flex;flex-direction:column;gap:.2rem}
-.readout-trio .readout-label{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--stone)}
-
-/* vertical-on-desktop / horizontal-on-narrow scale slider (ch03) */
-.scale-track{height:260px;display:flex;align-items:center;justify-content:center}
-.scale-track input[type=range]{width:220px;transform:rotate(-90deg)}
-@media(max-width:760px){
-  .scale-track{height:auto;padding:.5rem 0}
-  .scale-track input[type=range]{width:100%;transform:none}
-}
-
-/* Joule-Thomson COOLING / HEATING state label */
-.jt-state{font-family:var(--font-mono);letter-spacing:.08em}
-.jt-state.jt-cooling{color:var(--cyan)}
-.jt-state.jt-heating{color:var(--ember)}
-
-/* live-decoded Morse transcript (ch06 mirror galvanometer) */
-.transcript{
-  font-family:var(--font-mono);font-size:.95rem;letter-spacing:.14em;
-  color:var(--chapter-accent);min-height:1.6em;padding:.5rem 0;word-break:break-word;
-}
-
-/* ---------- Phase 3 — ch02 "Necessity or happenstance?" ---------- */
-.necessity-wrap{display:flex;flex-direction:column;gap:1rem;padding:.25rem 0}
-.necessity-axis-label{
-  display:flex;justify-content:space-between;gap:1rem;margin:0;
-  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--stone);
-}
-.necessity-track{
-  position:relative;height:2px;background:var(--line);margin:.1rem 0 1.4rem;
-}
-.necessity-mark{
-  position:absolute;top:50%;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;
-  border:1px solid var(--chapter-accent);border-radius:50%;
-  background:var(--ink);transition:background .25s var(--ease),transform .25s var(--ease);
-}
-.necessity-mark.is-on{background:var(--chapter-accent);transform:scale(1.5)}
-.necessity-list{display:flex;flex-wrap:wrap;gap:.5rem}
-.necessity-item{
-  flex:1 1 auto;text-align:left;cursor:pointer;
-  background:var(--ink-surface);color:var(--parchment);
-  border:1px solid var(--line-soft);padding:.6rem .8rem;
-  font-family:var(--font-body);font-size:.84rem;line-height:1.3;
-  transition:border-color .25s var(--ease),color .25s var(--ease),background .25s var(--ease);
-}
-.necessity-item:hover{border-color:var(--chapter-accent);color:var(--ivory)}
-.necessity-item.is-on{
-  border-color:var(--chapter-accent);color:var(--ivory);background:var(--ink-hi,var(--ink-surface));
-}
-.necessity-year{
-  display:block;font-family:var(--font-mono);font-size:.66rem;
-  letter-spacing:.1em;color:var(--stone);margin-top:.2rem;
-}
-.necessity-item.is-on .necessity-year{color:var(--chapter-accent)}
-.necessity-verdict-tag{font-size:1rem;letter-spacing:.06em}
-.necessity-verdict{
-  margin:.2rem 0 0;font-size:.88rem;line-height:1.62;color:var(--parchment);
-}
-@media(max-width:760px){
-  .necessity-list{flex-direction:column}
-  .necessity-item{flex:1 1 auto}
-}
-
-/* ---------- Phase 3 — ch12 "His circle" ---------- */
-.peers-net{
-  position:relative;aspect-ratio:16/11;min-height:320px;
-  border:1px solid var(--line-soft);background:var(--ink);overflow:hidden;
-}
-.peers-net canvas{position:absolute;inset:0;width:100%;height:100%}
-.peers-hub{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  font-family:var(--font-display);font-size:1.25rem;color:var(--ivory);
-  letter-spacing:.02em;pointer-events:none;
-}
-.peer-node{
-  position:absolute;transform:translate(-50%,-50%);cursor:pointer;
-  background:var(--ink-surface);color:var(--parchment);
-  border:1px solid var(--line);padding:.3rem .55rem;white-space:nowrap;
-  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;
-  transition:border-color .25s var(--ease),color .25s var(--ease);
-}
-.peer-node:hover{border-color:var(--chapter-accent);color:var(--ivory)}
-.peer-node.is-on{border-color:var(--chapter-accent);color:var(--ink);background:var(--chapter-accent)}
-.peer-name{
-  margin:.1rem 0 .3rem;font-family:var(--font-display);
-  font-size:1.05rem;color:var(--ivory);
-}
-.peer-text{margin:0;font-size:.86rem;line-height:1.62;color:var(--parchment)}
-/* below ~700px the radial layout stops being readable: stack it */
-.peers-net.is-stacked{aspect-ratio:auto;min-height:0;padding:1rem;border:0;background:none}
-.peers-net.is-stacked canvas,
-.peers-net.is-stacked .peers-hub{display:none}
-.peers-net.is-stacked .peers-nodes{display:flex;flex-wrap:wrap;gap:.4rem}
-.peers-net.is-stacked .peer-node{position:static;transform:none}
-
-/* ---------- Phase 3 — ch14 timeline ---------- */
-.timeline-wrap{aspect-ratio:16/7}
-.tl-event{margin:.2rem 0 0;font-size:.86rem;line-height:1.62;color:var(--parchment)}
-.tl-list{margin:.4rem 0 0;padding-left:1.05rem;font-size:.84rem;line-height:1.6}
-.tl-list li{margin-bottom:.45rem;color:var(--parchment)}
-.tl-list b{font-family:var(--font-mono);font-size:.74rem;color:var(--chapter-accent);letter-spacing:.06em}
-
-/* ---------- Phase 3 — ch15 sources ---------- */
+/* ---------- sources + rubric map ---------- */
 .sources-head{
   font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;
   text-transform:uppercase;color:var(--chapter-accent);
@@ -581,9 +455,154 @@ input[type=range]:focus-visible{outline:2px solid var(--chapter-accent);outline-
   .rubric-table td:last-child{color:var(--chapter-accent);font-family:var(--font-mono);font-size:.75rem}
 }
 
-/* A lab whose visual needs the full column width (ch12's network):
-   one column, controls below the figure rather than beside it. */
-.lab.lab-wide{grid-template-columns:1fr}
+/* =================================================================
+   EXPERIMENTS — one consistent layout for all five
+   Header (number, title, one-line instruction) → a full-width stage
+   → readouts → controls → one sentence on what you're seeing.
+   Full width because the old side-by-side layout squeezed the canvas
+   and left a tall, empty controls column beside it.
+   ================================================================= */
+.exp{
+  margin:2.6rem 0;border:1px solid var(--line);background:var(--ink-raised);
+  padding:clamp(1.1rem,3vw,2rem);display:flex;flex-direction:column;gap:1.3rem;
+}
+.exp-head{display:flex;flex-direction:column;gap:.4rem}
+.exp-tag{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--chapter-accent)}
+.exp-title{font-size:clamp(1.4rem,3vw,1.9rem);color:var(--ivory);text-wrap:balance}
+.exp-hint{margin:0;color:var(--parchment);font-size:.95rem;line-height:1.55;max-width:46rem}
+.exp-stage{
+  position:relative;width:100%;aspect-ratio:16/7;
+  background:var(--ink);border:1px solid var(--line-soft);overflow:hidden;
+}
+.exp-stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.exp-stage-tall{aspect-ratio:16/8}
+.exp-stage-short{aspect-ratio:16/6}
+.exp-stage-label{
+  position:absolute;left:.9rem;top:.75rem;pointer-events:none;
+  font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ivory);text-shadow:0 1px 6px var(--ink);
+}
+.exp-readouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem 1.5rem}
+.exp-readout{display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.exp-label{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--stone)}
+.exp-readouts .readout-lg{font-size:clamp(1.25rem,2.4vw,2rem);line-height:1.15;white-space:nowrap}
+.exp-readouts .figcap{margin:0}
+.exp-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem 2rem}
+.exp-controls-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.control-wide{grid-column:1/-1}
+.range-ends{
+  display:flex;justify-content:space-between;margin-top:-.2rem;
+  font-family:var(--font-mono);font-size:.64rem;letter-spacing:.06em;color:var(--stone);
+}
+.exp-chips{display:flex;flex-wrap:wrap;gap:.45rem}
+.chip{
+  cursor:pointer;background:transparent;color:var(--parchment);
+  border:1px solid var(--line);padding:.42rem .7rem;
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;
+  transition:border-color .2s var(--ease),color .2s var(--ease),background-color .2s var(--ease);
+}
+.chip:hover{border-color:var(--chapter-accent);color:var(--ivory)}
+.chip.is-on{background:var(--chapter-accent);border-color:var(--chapter-accent);color:var(--ink)}
+.exp-checks{display:flex;flex-wrap:wrap;gap:.6rem 1.6rem}
+.check{
+  display:inline-flex;align-items:center;gap:.55rem;cursor:pointer;
+  font-size:.9rem;color:var(--parchment);
+}
+.check input{width:1.05rem;height:1.05rem;accent-color:var(--chapter-accent);margin:0;cursor:pointer}
+.exp-note{
+  margin:0;padding-top:1rem;border-top:1px solid var(--line-soft);
+  font-size:.88rem;line-height:1.6;color:var(--stone);max-width:52rem;
+}
+
+/* ---------- simple content components ---------- */
+.split{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(1.5rem,4vw,3rem);align-items:start;margin:2rem 0}
+.split > div:not(.prose){display:flex;flex-direction:column;gap:1.2rem}
+.split .figure img{max-height:540px;object-fit:cover;object-position:50% 35%}
+.split .figure{margin:0}
+.split .prose p:first-child{margin-top:0}
+.cards-2,.cards-3{display:grid;gap:1.2rem;margin:2rem 0}
+.cards-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cards-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card > .tag{margin-bottom:.9rem}
+.card p{margin:.6rem 0 0;line-height:1.6}
+.card > .tag + p,.card > .tag + ul,.card > .tag + dl,.card > .tag + ol,.card > .tag + table{margin-top:.2rem}
+.sub-head{font-size:clamp(1.3rem,2.6vw,1.7rem);color:var(--ivory);margin:3rem 0 0;text-wrap:balance}
+.verdict{margin:1.4rem 0 0;font-size:1.05rem;color:var(--ivory);max-width:48rem;line-height:1.6}
+
+.today-card{
+  border:1px solid var(--line);border-left:3px solid var(--ivory);
+  background:var(--ink-raised);padding:1.3rem 1.6rem;margin:2rem 0;max-width:52rem;
+}
+.cards-2 .today-card{margin:0;max-width:none}
+.today-label{
+  display:block;font-family:var(--font-mono);font-size:.64rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--ivory);margin-bottom:.5rem;
+}
+.today-card p{margin:0;line-height:1.6;color:var(--parchment)}
+
+.fact-list{margin:0;display:flex;flex-direction:column}
+.fact-list > div{display:grid;grid-template-columns:6.5rem 1fr;gap:1rem;padding:.7rem 0;border-bottom:1px solid var(--line-soft)}
+.fact-list > div:last-child{border-bottom:0}
+.fact-list dt{font-family:var(--font-mono);font-size:.8rem;color:var(--chapter-accent);font-variant-numeric:tabular-nums}
+.fact-list dd{margin:0;line-height:1.55;color:var(--parchment)}
+
+.timeline-list{list-style:none;margin:0;padding:0}
+.timeline-list li{
+  display:grid;grid-template-columns:6.5rem 1fr;gap:1rem;padding:.55rem 0;
+  border-bottom:1px solid var(--line-soft);line-height:1.5;color:var(--parchment);
+}
+.timeline-list li:last-child{border-bottom:0}
+.timeline-list b{font-family:var(--font-mono);font-size:.8rem;font-weight:500;color:var(--chapter-accent);font-variant-numeric:tabular-nums}
+
+.plain-list{margin:0;padding-left:1.1rem;line-height:1.6;color:var(--parchment)}
+.plain-list li{margin-bottom:.55rem}
+
+.mini-table{border-collapse:collapse;margin:.2rem 0 0;font-variant-numeric:tabular-nums}
+.mini-table th,.mini-table td{text-align:left;padding:.5rem 2.2rem .5rem 0;border-bottom:1px solid var(--line-soft)}
+.mini-table th{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--stone);font-weight:400}
+.mini-table td{font-family:var(--font-mono);font-size:1rem;color:var(--ivory)}
+
+.peer-grid{margin:1.4rem 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.8rem}
+.peer-grid > div{border:1px solid var(--line-soft);background:var(--ink-raised);padding:1rem 1.1rem}
+.peer-grid dt{color:var(--ivory);font-weight:600;margin-bottom:.3rem}
+.peer-grid dd{margin:0;font-size:.9rem;line-height:1.5;color:var(--parchment)}
+
+.verdicts{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1rem}
+.verdicts li{display:grid;grid-template-columns:4.2rem 1fr;gap:1rem;align-items:start}
+.verdicts p{margin:0}
+.verdict-tag{
+  font-family:var(--font-mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;
+  text-align:center;padding:.3rem 0;border:1px solid currentColor;margin-top:.15rem;
+}
+.verdict-tag.is-false{color:var(--ember)}
+.verdict-tag.is-true{color:var(--brass)}
+.fact-check{margin:2.4rem 0 0}
+.pullquote cite{
+  display:block;margin-top:.8rem;font-family:var(--font-mono);font-style:normal;
+  font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--stone);
+}
+.cite-inline{font-family:var(--font-mono);font-size:.72rem;color:var(--stone)}
+
+@media(max-width:860px){
+  .split,.cards-2,.cards-3{grid-template-columns:1fr}
+  .exp-controls-3{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+  .exp-stage,.exp-stage-tall{aspect-ratio:4/3}
+  .exp-stage-short{aspect-ratio:4/3}
+  .exp-controls,.exp-controls-3{grid-template-columns:1fr}
+  .exp-readouts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fact-list > div,.timeline-list li{grid-template-columns:5rem 1fr;gap:.7rem}
+  .verdicts li{grid-template-columns:1fr;gap:.4rem}
+  .verdict-tag{justify-self:start;padding:.25rem .6rem}
+}
+
+/* ---------- web interface guideline fixes ---------- */
+:root{color-scheme:dark}
+.chapter{scroll-margin-top:4.5rem}           /* sticky top bar would cover anchor targets */
+h1,h2,h3{text-wrap:balance}
+button,input,.chip,a{touch-action:manipulation}
+a,button,input{-webkit-tap-highlight-color:transparent}
 
 /* =================================================================
    PRESENTER MODE
@@ -595,7 +614,7 @@ input[type=range]:focus-visible{outline:2px solid var(--chapter-accent);outline-
   position:fixed;left:0;right:0;bottom:0;z-index:900;
   display:grid;grid-template-columns:minmax(180px,1fr) 2.2fr auto;
   gap:1.4rem;align-items:start;
-  padding:.9rem clamp(1rem,3vw,2rem);
+  padding:.9rem clamp(1rem,3vw,2rem) calc(.9rem + env(safe-area-inset-bottom,0px));
   background:rgba(7,10,14,.96);border-top:1px solid var(--brass-dim);
   backdrop-filter:blur(8px);
 }
@@ -624,7 +643,7 @@ input[type=range]:focus-visible{outline:2px solid var(--chapter-accent);outline-
 .pres-nav button:hover{border-color:var(--brass);color:var(--ivory)}
 
 .pres-sheet{
-  position:fixed;inset:0;z-index:950;overflow-y:auto;
+  position:fixed;inset:0;z-index:950;overflow-y:auto;overscroll-behavior:contain;
   background:rgba(7,10,14,.985);padding:clamp(1.5rem,5vw,3rem);
 }
 .pres-sheet-inner{max-width:1100px;margin:0 auto;padding-bottom:6rem}
@@ -652,10 +671,10 @@ body.presenting .rail{display:none}
 body.presenting .prose,
 body.presenting details.physics,
 body.presenting .figure,
-body.presenting .lab-summary,
 body.presenting .sources-list,
-body.presenting .tl-list,
-body.presenting .pullquote{display:none}         /* nothing to read aloud */
+body.presenting .pullquote,
+body.presenting .exp-note,
+body.presenting .fact-check{display:none}         /* nothing to read aloud */
 body.presenting .chapter{padding-block:clamp(2rem,4vw,3rem)}
 body.presenting .chapter-title{font-size:clamp(2rem,5vw,3.4rem)}
 body.presenting .lede{font-size:clamp(1.1rem,2.2vw,1.5rem);color:var(--ivory)}
@@ -672,14 +691,3 @@ body.presenting .figcap{font-size:.85rem}
 }
 @media print{ .pres-bar,.pres-sheet{display:none!important} }
 
-/* Mobile fallback for the ch12 network. This deliberately duplicates
-   what the JS .is-stacked class does: the radial layout depends on JS
-   having measured the box, and if that runs before the element has a
-   size the absolutely-positioned nodes escape their container. The
-   media query makes the narrow case correct without JS. */
-@media(max-width:760px){
-  .peers-net{aspect-ratio:auto;min-height:0;padding:0;border:0;background:none;overflow:visible}
-  .peers-net canvas,.peers-net .peers-hub{display:none}
-  .peers-net .peers-nodes{display:flex;flex-wrap:wrap;gap:.4rem}
-  .peers-net .peer-node{position:static!important;transform:none!important;left:auto!important;top:auto!important}
-}

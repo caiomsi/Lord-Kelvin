@@ -17,54 +17,51 @@
 
   /* ---------------- the run ---------------- */
   var STOPS = [
-    { id: 'ch03', secs: 20, title: 'Hook — the bottom of temperature',
+    { id: 'ch03', secs: 30, title: 'Hook — absolute zero',
       points: [
-        'Every temperature you have ever read has a floor. He found it.',
-        'Drag to absolute zero — the molecules stop. Nothing gets colder than this.',
-        '−273.15 °C. He worked it out in 1848, at twenty-four.'
+        'Every temperature has a floor: −273.15 °C. Kelvin found it in 1848, aged 24.',
+        'Drag the slider down — the molecules slow down and stop at 0 K.',
+        'Now drag it up — faster and faster, until they glow like the Sun.'
       ] },
     { id: 'ch01', secs: 30, title: 'Who he was',
       points: [
-        'William Thomson, born Belfast 1824. Father a maths professor who taught him at home.',
-        'University of Glasgow at ten. Read Fourier at sixteen and published a paper defending him.',
-        'Professor of Natural Philosophy at twenty-two — and held that chair for fifty-three years.',
-        'Became Lord Kelvin in 1892, named after the river past the university.'
+        'Born in Belfast in 1824. His father, a maths professor, taught him at home.',
+        'At university at 10. First physics paper at 16. Professor at 22 — for 53 years.',
+        'Later made Lord Kelvin, named after the river beside his university.'
       ] },
-    { id: 'ch02', secs: 30, title: 'The world he worked in',
+    { id: 'ch02', secs: 25, title: 'His world',
       points: [
-        'Peak Victorian industry — steam, iron, empire, and a telegraph boom with serious money behind it.',
-        'The word "scientist" was only coined in 1833. His job title was natural philosopher.',
-        'Necessity or happenstance? Both — click through the axis.',
-        'The cable was pure commerce. The absolute scale was pure curiosity and worth nothing at the time.'
+        'Britain’s Industrial Revolution: steam, iron ships, empire and the telegraph.',
+        'Science was expected to be useful. The word “scientist” was only invented in 1833.',
+        'Necessity or happenstance? Both — his money came from necessity, his best physics from curiosity.'
       ] },
-    { id: 'ch04', secs: 60, title: 'The physics — absolute zero and the Second Law',
+    { id: 'ch04', secs: 40, title: 'The Second Law',
       points: [
-        'He defined temperature from a heat engine instead of from a substance — so it stopped depending on mercury or air.',
-        'Efficiency is 1 minus T-cold over T-hot. Drag the cold reservoir down.',
-        'You only reach 100% at absolute zero — which is unreachable. That is the Second Law.',
-        'He also wrote the 1852 paper on energy dissipation — the origin of the heat death of the universe.'
+        'Before him, heat was thought to be a fluid called “caloric”.',
+        'His law: no engine can turn all of its heat into work.',
+        'Drag the cold side toward 0 K — 100% efficiency needs absolute zero, which is impossible.',
+        'It sets the limit on every engine, power station and fridge today.'
       ] },
-    { id: 'ch06', secs: 45, title: 'The cable that made him rich',
+    { id: 'ch05', secs: 35, title: 'The Atlantic cable',
       points: [
-        'The 1858 transatlantic cable failed. Its chief electrician forced high voltages through and destroyed it.',
-        'Kelvin showed the delay grows with the square of the length — double the cable, quadruple the lag. Press Send.',
-        'His answer: tiny currents, plus a detector sensitive enough to read them — the mirror galvanometer.',
-        'The 1866 cable worked. Knighted that year; about seventy patents made him wealthy.'
+        '1858: the first Atlantic cable burned out within weeks.',
+        'Kelvin showed the delay grows with the square of the length — double the cable, 4× the delay.',
+        'His fix: small currents plus a super-sensitive detector. The 1866 cable worked — knighted, and rich.'
       ] },
-    { id: 'ch08', secs: 40, title: 'Where he was wrong',
+    { id: 'ch07', secs: 40, title: 'Where he was wrong',
       points: [
-        'He calculated the Earth at 20–40 million years and used it against Darwin for forty years.',
-        'The usual story is that radioactivity proved him wrong. That is itself a myth.',
-        'His own student John Perry found it in 1895, before radioactivity: the interior convects, so the Earth can be billions of years old.',
-        'His maths was right. His premise was incomplete — and no rigour downstream of a wrong premise can save it.'
+        'He said the Earth was 20–40 million years old. It is 4.5 billion.',
+        'Most books blame radioactivity. The real flaw: he assumed heat only soaks out through solid rock.',
+        'His own former assistant, John Perry, showed in 1895 that a flowing interior gives billions of years.',
+        'His maths was right. One assumption was wrong.'
       ] },
-    { id: 'ch09', secs: 35, title: 'Two clouds — and what he is owed',
+    { id: 'ch08', secs: 40, title: 'Where he was right',
       points: [
-        'In 1900 he said physics had two unexplained clouds left.',
-        'Cloud one became special relativity. Cloud two became quantum mechanics. Both within five years.',
-        'Look at the chart: the classical curve runs off the top of the frame. That is the ultraviolet catastrophe.',
-        'He never said "there is nothing left to discover" — no source exists. He said the opposite, and he was right.',
-        'Buried in Westminster Abbey beside Newton. Since 2019 the kelvin is fixed by the Boltzmann constant.'
+        'In 1900 he named two problems physics could not explain.',
+        'They became relativity and quantum physics within 5 years.',
+        'On the chart, the old theory shoots off to infinity — that is cloud number 2.',
+        'He never said “there is nothing new to discover” — no source exists.',
+        'Buried next to Isaac Newton. Every scientist measures temperature in kelvin.'
       ] }
   ];
 

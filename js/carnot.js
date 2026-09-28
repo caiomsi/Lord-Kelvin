@@ -8,7 +8,7 @@
    ================================================================= */
 (function () {
   'use strict';
-  var root = document.getElementById('ch04');
+  var root = document.getElementById('carnot-lab');
   if (!root) return;
   var Engine = window.KelvinEngine, Physics = window.KelvinPhysics;
   if (!Engine || !Physics || !Engine.setupCanvas) return;

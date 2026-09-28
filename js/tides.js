@@ -1,6 +1,6 @@
 /* =================================================================
    KELVIN — tides.js
-   Chapter 07 — the tide-predicting machine: six real harmonic
+   Experiment 3 — the tide-predicting machine: six real harmonic
    constituents (KelvinPhysics.TIDAL_CONSTITUENTS), each with an
    amplitude slider, drive small rotating wheels (one per constituent,
    spinning at a rate set by its own period — a nod to the machine's
@@ -10,7 +10,7 @@
    ================================================================= */
 (function () {
   'use strict';
-  var root = document.getElementById('ch07');
+  var root = document.getElementById('tides-lab');
   if (!root) return;
   var Engine = window.KelvinEngine, Physics = window.KelvinPhysics;
   if (!Engine || !Physics || !Engine.setupCanvas) return;
