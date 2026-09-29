@@ -16,24 +16,25 @@
   if (!body) return;
 
   /* ---------------- the run ---------------- */
+  /* In the same order as the website: his life first, then the science. */
   var STOPS = [
-    { id: 'ch03', secs: 30, title: 'Hook — absolute zero',
-      points: [
-        'Every temperature has a floor: absolute zero, −273.15 °C. Kelvin worked it out in 1848, aged 23.',
-        'Drag the slider down — the molecules slow down and stop at 0 K.',
-        'Now drag it up — faster and faster, until they glow like the Sun.'
-      ] },
     { id: 'ch01', secs: 30, title: 'Who he was',
       points: [
+        'Meet William Thomson — Lord Kelvin, the man who found the bottom of temperature.',
         'Born in Belfast in 1824. His father, a maths professor, taught him at home.',
-        'At university at 10. First physics paper at 16. Professor at 22 — for 53 years.',
-        'Later made Lord Kelvin, named after the river beside his university.'
+        'At university at 10. First physics paper at 16. Professor at 22 — for 53 years.'
       ] },
     { id: 'ch02', secs: 25, title: 'His world',
       points: [
         'Britain’s Industrial Revolution: steam, iron ships, empire and the telegraph.',
         'Science was expected to be useful. The word “scientist” was only invented in 1833.',
         'Necessity or happenstance? Both — his money came from necessity, his best physics from curiosity.'
+      ] },
+    { id: 'ch03', secs: 30, title: 'Absolute zero',
+      points: [
+        'Every temperature has a floor: absolute zero, −273.15 °C. Kelvin worked it out in 1848, aged 23.',
+        'Drag the slider down — the molecules slow down and stop at 0 K.',
+        'Now drag it up — faster and faster, until they glow like the Sun.'
       ] },
     { id: 'ch04', secs: 40, title: 'The Second Law',
       points: [
@@ -44,7 +45,7 @@
       ] },
     { id: 'ch05', secs: 35, title: 'The Atlantic cable',
       points: [
-        '1858: the first Atlantic cable burned out within weeks.',
+        '1858: the first Atlantic cable failed after carrying 732 messages.',
         'Kelvin showed the delay grows with the square of the length — double the cable, 4× the delay.',
         'His fix: small currents plus a super-sensitive detector. The 1866 cable worked — knighted, and rich.'
       ] },

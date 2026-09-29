@@ -128,7 +128,7 @@ energy through elastic collisions. Colour follows incandescence (glow from ~798 
 ## Presenter mode
 
 `P` toggles, `Esc` leaves, `←`/`→` move between stops, `Q` opens the Q&A sheet.
-Seven stops totalling **4:00**, each with a target time and talking points; the clock
+Seven stops totalling **4:00**, in the same order as the website (his life first), each with a target time and talking points; the clock
 goes amber past the current stop's budget and red past 5:00. Editing the run means
 editing `STOPS` in `js/presenter.js` — keep the total inside the 3–5 minute window.
 
