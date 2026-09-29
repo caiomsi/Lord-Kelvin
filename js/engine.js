@@ -201,7 +201,39 @@
     return root.setTimeout(cb, 16);
   }
 
+  /* Canvas label font, sized to the stage so text stays readable on a
+     projector: ~13px on a phone, up to ~20px on a wide desktop stage.
+     Every experiment uses this instead of fixed 9-11px sizes. */
+  var FAMILIES = {
+    mono: '"IBM Plex Mono", ui-monospace, monospace',
+    sans: 'Inter, system-ui, sans-serif'
+  };
+  function textPx(stage, scale) {
+    var w = (stage && stage.w) || 600;
+    var base = Math.max(13, Math.min(20, w / 58));
+    return Math.round(base * (scale || 1) * 10) / 10;
+  }
+  function font(stage, scale, weight, family) {
+    return (weight || 400) + ' ' + textPx(stage, scale) + 'px ' + (FAMILIES[family] || FAMILIES.sans);
+  }
+
+  /* Paint a slider's filled track: sets --fill (0-100%), which the CSS
+     turns into an accent-coloured bar up to the handle. Called on every
+     input by main.js, and by any module that moves a slider in code. */
+  function syncRange(el) {
+    if (!el || !el.style) return;
+    var min = parseFloat(el.min), max = parseFloat(el.max), v = parseFloat(el.value);
+    if (isNaN(min)) min = 0;
+    if (isNaN(max)) max = 100;
+    if (!(max > min) || isNaN(v)) return;
+    var pct = Math.max(0, Math.min(100, (v - min) / (max - min) * 100));
+    el.style.setProperty('--fill', pct.toFixed(2) + '%');
+  }
+
   root.KelvinEngine = {
+    font: font,
+    syncRange: syncRange,
+    textPx: textPx,
     reducedMotion: reducedMotion,
     setupCanvas: setupCanvas,
     register: register,

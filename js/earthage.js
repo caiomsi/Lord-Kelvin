@@ -57,9 +57,13 @@
     return seconds / Physics.SECONDS_PER_YEAR / 1e6;
   }
 
+  /* plain units — "96 million years", not "96 My" */
   function fmt(my) {
-    if (my >= 1000) return (my / 1000).toFixed(2) + ' Gy';
-    return Math.round(my) + ' My';
+    if (my >= 1000) {
+      var gy = my / 1000;
+      return (gy >= 10 ? gy.toFixed(0) : gy.toFixed(2).replace(/0$/, '')) + ' billion years';
+    }
+    return Math.round(my) + ' million years';
   }
 
   function draw() {
@@ -67,70 +71,102 @@
     var ctx = stage.ctx, w = stage.w, h = stage.h;
     var accent = css('--chapter-accent', '#d9673f');
     var ivory = css('--ivory', '#f0ece3');
-    var stone = css('--stone', '#8b8579');
+    var parchment = css('--parchment', '#c7c2b6');
     var line = css('--line', 'rgba(240,236,227,.12)');
+    var F = function (scale, weight, fam) { return Engine.font(stage, scale, weight, fam); };
+    var px = function (scale) { return Engine.textPx(stage, scale); };
 
     ctx.clearRect(0, 0, w, h);
 
-    var rows = [{ label: 'Kelvin, 1862 — conduction only', my: kelvinMy(), key: 'kelvin' }];
-    if (radioEl && radioEl.checked) {
-      rows.push({ label: 'Kelvin’s method + radiogenic heat', my: kelvinMy() * RADIO_FACTOR, key: 'radio' });
-    }
-    if (perryEl && perryEl.checked) {
-      rows.push({ label: 'Perry, 1895 — convecting interior', my: PERRY_MY, key: 'perry' });
-    }
-    rows.push({ label: 'Modern — radiometric dating', my: MODERN_MY, key: 'modern' });
+    var kMy = kelvinMy();
+    /* All four rows are always drawn, so the layout never jumps; an
+       unticked row is a faint placeholder pointing at its tick-box. */
+    var rows = [
+      { label: 'Kelvin (1862): heat escapes only through solid rock', my: kMy, key: 'kelvin', on: true },
+      { label: 'Kelvin + radioactive heat', my: kMy * RADIO_FACTOR, key: 'radio', on: !!(radioEl && radioEl.checked) },
+      { label: 'Perry (1895): the hot interior flows', my: PERRY_MY, key: 'perry', on: !!(perryEl && perryEl.checked) },
+      { label: 'The real age (radioactive dating)', my: MODERN_MY, key: 'modern', on: true }
+    ];
 
-    var padL = Math.min(28, w * 0.05);
-    var padR = Math.min(28, w * 0.05);
-    var top = Math.max(22, h * 0.10);
+    var padL = Math.max(12, Math.min(28, w * 0.04));
+    var padR = padL;
     var avail = w - padL - padR;
-    var rowH = Math.min(78, (h - top - 20) / rows.length);
-    var barH = Math.min(26, rowH * 0.34);
-    var blockH = rowH * rows.length;
-    top = Math.max(top, (h - 18 - blockH) / 2 + 14);
-    var slot = rowH;
 
+    /* the headline, computed from the bars below */
+    var pct = kMy / MODERN_MY * 100;
+    var pctTxt = (pct < 1 ? pct.toFixed(1) : Math.round(pct).toString()) + '%';
     ctx.textBaseline = 'alphabetic';
+    ctx.textAlign = 'left';
+    var headY = px(1.6);
+    ctx.font = F(1.05, 600);
+    var a1 = 'Kelvin\u2019s answer is only ', a3 = ' of the real age';
+    ctx.fillStyle = ivory;
+    ctx.fillText(a1, padL, headY);
+    var x2 = padL + ctx.measureText(a1).width;
+    ctx.fillStyle = accent;
+    ctx.fillText(pctTxt, x2, headY);
+    ctx.fillStyle = ivory;
+    ctx.fillText(a3, x2 + ctx.measureText(pctTxt).width, headY);
+
+    var top = headY + px(2.6);
+    var footer = px(1.3);
+    var rowH = Math.min(px(4.4), (h - top - footer) / rows.length);
+    var barH = Math.max(12, Math.min(px(1.5), rowH * 0.4));
 
     for (var i = 0; i < rows.length; i++) {
       var r = rows[i];
-      var y = top + i * slot;
+      var y = top + i * rowH;
       var frac = Math.max(0, Math.min(1, r.my / MODERN_MY));
-      var bw = Math.max(1.5, avail * frac);
+      var bw = Math.max(3, avail * frac);
+      var isK = (r.key === 'kelvin');
 
-      /* label */
-      ctx.font = '500 ' + Math.max(10, Math.min(12.5, w / 52)) + 'px Inter, system-ui, sans-serif';
-      ctx.fillStyle = (r.key === 'kelvin') ? ivory : stone;
-      ctx.fillText(r.label, padL, y - 6);
+      ctx.font = F(0.82, isK ? 600 : 500);
+      ctx.fillStyle = isK ? ivory : parchment;
+      ctx.globalAlpha = r.on ? 1 : 0.45;
+      ctx.fillText(r.label, padL, y - px(0.45));
+      ctx.globalAlpha = 1;
 
-      /* track */
       ctx.fillStyle = line;
       ctx.fillRect(padL, y, avail, barH);
 
-      /* bar */
-      ctx.globalAlpha = (r.key === 'kelvin') ? 1 : (r.key === 'modern' ? 0.58 : 0.42);
+      if (!r.on) {
+        ctx.font = F(0.72, 500);
+        ctx.fillStyle = parchment;
+        ctx.globalAlpha = 0.7;
+        ctx.fillText('\u2193 tick the box below to add this bar', padL + 10, y + barH / 2 + px(0.28));
+        ctx.globalAlpha = 1;
+        continue;
+      }
+
+      ctx.globalAlpha = isK ? 1 : (r.key === 'modern' ? 0.65 : 0.5);
       ctx.fillStyle = accent;
       ctx.fillRect(padL, y, bw, barH);
       ctx.globalAlpha = 1;
 
       /* value — inside the bar if it fits, otherwise just past its end */
-      ctx.font = '400 ' + Math.max(10, Math.min(12, w / 56)) + 'px "IBM Plex Mono", ui-monospace, monospace';
+      ctx.font = F(0.82, 600, 'mono');
       var txt = fmt(r.my);
       var tw = ctx.measureText(txt).width;
-      if (bw > tw + 16) {
+      var ty = y + barH / 2 + px(0.3);
+      if (bw > tw + 20) {
         ctx.fillStyle = css('--ink', '#070a0e');
-        ctx.fillText(txt, padL + bw - tw - 8, y + barH - (barH - 9) / 2);
+        ctx.fillText(txt, padL + bw - tw - 10, ty);
       } else {
-        ctx.fillStyle = (r.key === 'kelvin') ? accent : stone;
-        ctx.fillText(txt, padL + bw + 8, y + barH - (barH - 9) / 2);
+        /* a small pointer so Kelvin's sliver can't be missed */
+        ctx.fillStyle = isK ? accent : ivory;
+        ctx.beginPath();
+        ctx.moveTo(padL + bw + 6, ty - px(0.3));
+        ctx.lineTo(padL + bw + 14, ty - px(0.3) - 5);
+        ctx.lineTo(padL + bw + 14, ty - px(0.3) + 5);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillText(txt, padL + bw + 20, ty);
       }
     }
 
-    /* footer note */
-    ctx.font = '400 ' + Math.max(9.5, Math.min(11, w / 62)) + 'px "IBM Plex Mono", ui-monospace, monospace';
-    ctx.fillStyle = stone;
-    ctx.fillText('drawn to scale — 0 to 4.54 Gy', padL, h - 5);
+    ctx.font = F(0.68, 500);
+    ctx.fillStyle = parchment;
+    ctx.fillText('Bars drawn to scale: the full width is 4.54 billion years', padL, h - px(0.4));
   }
 
   function sync() {

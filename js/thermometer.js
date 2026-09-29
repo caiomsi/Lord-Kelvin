@@ -251,6 +251,56 @@
       ctx.fill();
     }
     ctx.globalAlpha = 1;
+
+    drawKey(ctx, w, h);
+  }
+
+  /* Colour key, bottom-left: what each glow colour means. The band the
+     current temperature falls in is drawn bright; the rest are dimmed. */
+  var KEY = [
+    { name: 'frozen', T: 0, max: 0 },
+    { name: 'cold', T: 20, max: 200 },
+    { name: 'room', T: 300, max: 700 },
+    { name: 'red-hot', T: 1000, max: 3000 },
+    { name: 'white-hot', T: 6000, max: Infinity }
+  ];
+  function keyBand(T) {
+    for (var i = 0; i < KEY.length; i++) if (T <= KEY[i].max) return i;
+    return KEY.length - 1;
+  }
+  function drawKey(ctx, w, h) {
+    var fontPx = Engine.textPx(stage, 0.82);
+    ctx.font = Engine.font(stage, 0.82, 600);
+    var r = Math.max(4, fontPx * 0.36), gap = fontPx * 0.9, pad = fontPx * 0.6;
+    var widths = KEY.map(function (k) { return r * 2 + 6 + ctx.measureText(k.name).width; });
+    var total = widths.reduce(function (a, b) { return a + b + gap; }, 0) - gap + pad * 2;
+    if (total > w - 16) return;                 /* too narrow to fit: leave it out */
+    var bh = fontPx * 1.9, x = 10, y = h - bh - 10;
+    ctx.globalAlpha = 0.92;
+    ctx.fillStyle = inkColor;
+    ctx.fillRect(x, y, total, bh);
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = 'rgba(240,236,227,.18)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(x + 0.5, y + 0.5, total - 1, bh - 1);
+    ctx.globalAlpha = 1;
+    var on = keyBand(currentK);
+    var cx = x + pad, cy = y + bh / 2;
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'left';
+    for (var i = 0; i < KEY.length; i++) {
+      var c = tempRGB(KEY[i].T);
+      ctx.globalAlpha = (i === on) ? 1 : 0.7;
+      ctx.fillStyle = 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')';
+      ctx.beginPath();
+      ctx.arc(cx + r, cy, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = (i === on) ? '#f0ece3' : '#c7c2b6';
+      ctx.fillText(KEY[i].name, cx + r * 2 + 6, cy + 1);
+      cx += widths[i] + gap;
+    }
+    ctx.globalAlpha = 1;
+    ctx.textBaseline = 'alphabetic';
   }
 
   /* ---------------- readouts + state ---------------- */
@@ -268,12 +318,13 @@
       chips[i].classList.toggle('is-on', on);
       chips[i].setAttribute('aria-pressed', on ? 'true' : 'false');
     }
-    if (markOut) markOut.textContent = near === null ? '' : (T === 0 ? '' : '≈ ') + chips[near].textContent;
+    if (markOut) markOut.textContent = fmt(T) + ' K' + (near === null ? '' : '  \u00b7  ' + (T === 0 ? '' : '\u2248 ') + chips[near].textContent);
   }
 
   function setTemp(T) {
     currentK = Physics.clamp(T, 0, 1e8);
     range.value = String(tempToPos(currentK));
+    if (Engine.syncRange) Engine.syncRange(range);   /* moved in code: no input event */
     updateReadouts();
     draw();
   }

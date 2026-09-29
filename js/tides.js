@@ -79,42 +79,52 @@
     ctx.fillStyle = ink;
     ctx.fillRect(0, 0, w, h);
 
-    // -- wheels strip --
-    var wheelH = Math.max(56, h * 0.24);
+    var F = function (scale, weight) { return Engine.font(state, scale, weight); };
+    var narrow = w < 560;   /* phones: shorter labels, fewer ticks */
+    var px = function (scale) { return Engine.textPx(state, scale); };
+
+    // -- wheels strip: one wheel per wave, named in plain words --
     var n = cons.length;
     var slotW = w / n;
-    var wheelR = Math.min(slotW, wheelH) * 0.32;
-    var wheelY = wheelH * 0.48;
+    var NAMES = slotW >= 110
+      ? { M2: 'Moon', S2: 'Sun', N2: 'Moon orbit', K1: 'Daily K1', O1: 'Daily O1', P1: 'Daily P1' }
+      : { M2: 'Moon', S2: 'Sun', N2: 'Orbit', K1: 'K1', O1: 'O1', P1: 'P1' };
+    var wheelH = Math.max(70, h * 0.25);
+    var wheelR = Math.min(slotW * 0.28, wheelH * 0.3);
+    var wheelY = wheelR + 8;
 
-    ctx.font = '9px "IBM Plex Mono", ui-monospace, monospace';
     ctx.textAlign = 'center';
+    ctx.textBaseline = 'alphabetic';
     for (var i = 0; i < n; i++) {
       var c = cons[i];
       var cx = slotW * (i + 0.5);
       var ampFrac = Physics.clamp(c.amp / 1.5, 0, 1);
-      ctx.strokeStyle = line;
-      ctx.lineWidth = 1;
+      var on = ampFrac > 0.02;
+      ctx.globalAlpha = on ? 1 : 0.4;
+      ctx.strokeStyle = on ? brass : line;
+      ctx.lineWidth = 1.5;
       ctx.beginPath();
       ctx.arc(cx, wheelY, wheelR, 0, Math.PI * 2);
       ctx.stroke();
 
       var ang = (wheelPhase / c.period) * Math.PI * 2;
       var spokeLen = wheelR * (0.25 + 0.75 * ampFrac);
-      ctx.strokeStyle = ampFrac > 0.02 ? brassBright : stone;
-      ctx.lineWidth = 1.6;
+      ctx.strokeStyle = on ? brassBright : stone;
+      ctx.lineWidth = 2.4;
       ctx.beginPath();
       ctx.moveTo(cx, wheelY);
       ctx.lineTo(cx + Math.cos(ang) * spokeLen, wheelY + Math.sin(ang) * spokeLen);
       ctx.stroke();
 
-      ctx.fillStyle = ampFrac > 0.02 ? ivory : stone;
-      ctx.fillText(c.id, cx, wheelY + wheelR + 12);
+      ctx.fillStyle = on ? ivory : stone;
+      ctx.font = F(0.78, on ? 600 : 400);
+      ctx.fillText(NAMES[c.id] || c.id, cx, wheelY + wheelR + px(0.95));
     }
-    ctx.textAlign = 'left';
+    ctx.globalAlpha = 1;
 
     // -- summed curve --
-    var plotT = wheelH + 14, plotB = h - 22, plotL = 32, plotR = w - 12;
-    var N = 180;
+    var plotT = wheelH + px(2.4), plotB = h - px(1.9), plotL = px(1.9), plotR = w - px(0.8);
+    var N = 240;
     var vMax = 0.001, samples = [];
     for (var s = 0; s <= N; s++) {
       var day = DAYS * s / N;
@@ -122,53 +132,70 @@
       samples.push(v);
       if (Math.abs(v) > vMax) vMax = Math.abs(v);
     }
-    vMax *= 1.18;
+    vMax *= 1.1;
 
     function xPix(day) { return plotL + (day / DAYS) * (plotR - plotL); }
     function yPix(v) { return (plotT + plotB) / 2 - (v / vMax) * ((plotB - plotT) / 2); }
 
+    // mean sea level
     ctx.strokeStyle = line;
+    ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(plotL, yPix(0) + 0.5);
     ctx.lineTo(plotR, yPix(0) + 0.5);
     ctx.stroke();
 
-    // beat markers — multiples of the M2/S2 beat period
-    if (beatDays > 0) {
-      ctx.save();
-      ctx.setLineDash([3, 4]);
-      ctx.strokeStyle = brass;
-      ctx.globalAlpha = 0.7;
-      for (var mult = 0; mult * beatDays <= DAYS + 0.01; mult++) {
-        var bx = xPix(mult * beatDays);
+    // spring and neap tides, marked where they happen — only meaningful
+    // when both the Moon (M2) and Sun (S2) waves are switched on
+    var m2On = inputs.M2 && parseFloat(inputs.M2.value) > 0.02;
+    var s2On = inputs.S2 && parseFloat(inputs.S2.value) > 0.02;
+    if (beatDays > 0 && m2On && s2On) {
+      ctx.font = F(0.82, 600);
+      for (var k = 0; k * beatDays / 2 <= DAYS + 0.01; k++) {
+        var d = k * beatDays / 2, bx = xPix(d);
+        var spring = (k % 2 === 0);
+        ctx.save();
+        ctx.setLineDash([4, 5]);
+        ctx.strokeStyle = spring ? brassBright : stone;
+        ctx.globalAlpha = spring ? 0.7 : 0.5;
         ctx.beginPath();
         ctx.moveTo(bx, plotT);
         ctx.lineTo(bx, plotB);
         ctx.stroke();
+        ctx.restore();
+        var label = narrow ? (spring ? 'Spring' : 'Neap') : (spring ? 'Spring tide' : 'Neap tide');
+        var tw = ctx.measureText(label).width;
+        ctx.textAlign = 'center';
+        var lx = Physics.clamp(bx, plotL + tw / 2, plotR - tw / 2);
+        ctx.fillStyle = spring ? brassBright : ivory;
+        ctx.fillText(label, lx, plotT - px(0.5));
       }
-      ctx.restore();
-      ctx.fillStyle = stone;
-      ctx.font = '9px "IBM Plex Mono", ui-monospace, monospace';
-      ctx.fillText('spring/neap beat ≈ ' + beatDays.toFixed(1) + ' d', xPix(0) + 4, plotT + 10);
     }
 
     ctx.beginPath();
     for (s = 0; s <= N; s++) {
-      var px = xPix(DAYS * s / N), py = yPix(samples[s]);
-      if (s === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      var qx = xPix(DAYS * s / N), qy = yPix(samples[s]);
+      if (s === 0) ctx.moveTo(qx, qy); else ctx.lineTo(qx, qy);
     }
     ctx.strokeStyle = brassBright;
-    ctx.lineWidth = 1.8;
+    ctx.lineWidth = 2;
     ctx.stroke();
 
-    ctx.font = '9px "IBM Plex Mono", ui-monospace, monospace';
-    ctx.fillStyle = stone;
+    // axes, in plain words
+    ctx.font = F(0.72, 500);
+    ctx.fillStyle = ivory;
     ctx.textAlign = 'center';
-    [0, 5, 10, 15, 20, 25, 30].forEach(function (d) {
-      ctx.fillText(String(d), xPix(d), plotB + 12);
+    (narrow ? [0, 10, 20] : [0, 5, 10, 15, 20, 25]).forEach(function (dd) {
+      ctx.fillText(String(dd), xPix(dd), plotB + px(1.2));
     });
     ctx.textAlign = 'right';
-    ctx.fillText('days ->', plotR, plotT + 10);
+    ctx.fillText('30 days', plotR, plotB + px(1.2));
+    ctx.save();
+    ctx.translate(px(0.8), (plotT + plotB) / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.textAlign = 'center';
+    ctx.fillText('Tide height', 0, 0);
+    ctx.restore();
     ctx.textAlign = 'left';
   }
 

@@ -107,6 +107,19 @@ Each module finds itself by its lab id (`therm-lab`, `carnot-lab`, `tides-lab`,
 `earthage-lab`, `blackbody-lab`), **never by chapter number** — chapters get
 renumbered.
 
+**Legibility rules (the site is presented on a projector):**
+- Canvas text always goes through `KelvinEngine.font(stage, scale, weight, family)` /
+  `textPx(stage, scale)` — sized to the stage, never below 13px. No fixed 9–11px labels.
+- Labels are plain English on the visual itself ("Heat in", "Useful work",
+  "Spring tide", "Wavelength (nm)", "96 million years") — no `Qh`, `My`, "beat".
+  The key result is annotated on the chart (e.g. "only 2% of the real age").
+- Each experiment header has a **Try:** line (`.exp-hint`) and a **Look for:** line
+  (`.exp-look`) naming the one thing to notice.
+- Sliders show a filled track via `--fill`; `main.js` keeps it in sync on input, and
+  any module that sets `input.value` in code must call `KelvinEngine.syncRange(el)`.
+- Narrow stages (`w < 560`) get shorter labels (Carnot, tides) — check at 390px.
+- Hot is drawn warm (ember) and cold is drawn cold (cyan) — never the reverse.
+
 The thermometer's pixel speed is a *display* compression (∝ √v_rms, i.e. T^¼) so
 motion keeps visibly increasing across a log slider spanning 0 K–10⁸ K; the readout
 is the real v_rms. Molecule speeds are Maxwell–Boltzmann distributed and exchange

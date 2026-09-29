@@ -32,11 +32,13 @@
       return v || fallback;
     } catch (e) { return fallback; }
   }
-  var accent = cssVar('--cyan', '#6fd3e8');
-  var brass = cssVar('--brass', '#c9a14a');
+  /* Hot is drawn warm and cold is drawn cold — the first version had
+     them the other way round, which fought every reader's intuition. */
+  var hotColor = cssVar('--ember', '#d9673f');
+  var coldColor = cssVar('--cyan', '#6fd3e8');
+  var parchment = cssVar('--parchment', '#c7c2b6');
   var brassBright = cssVar('--brass-bright', '#e8c979');
   var ivory = cssVar('--ivory', '#f0ece3');
-  var stone = cssVar('--stone', '#8b8579');
   var ink = cssVar('--ink', '#070a0e');
   var inkSurface = cssVar('--ink-surface', '#141b24');
 
@@ -100,65 +102,117 @@
 
     phase = (phase + dtSec * 0.35) % 1;
 
+    var F = function (scale, weight) { return Engine.font(state, scale, weight); };
+    /* phones: shorter words, labels under the arrows instead of over them */
+    var narrow = w < 560;
+    var workPct = Math.round(eta * 100);
+    var wastePct = 100 - workPct;
+
     ctx.fillStyle = ink;
     ctx.fillRect(0, 0, w, h);
 
-    var boxW = w * 0.16, boxH = h * 0.42;
-    var hotX = w * 0.06, coldX = w * 0.94 - boxW;
-    var boxY = h * 0.5 - boxH / 2;
-    var engineCx = w * 0.5, engineCy = h * 0.5, engineR = Math.min(w, h) * 0.13;
+    var boxW = w * 0.17, boxH = h * 0.40;
+    var hotX = w * 0.05, coldX = w * 0.95 - boxW;
+    var boxY = h * 0.54 - boxH / 2;
+    var engineCx = w * 0.5, engineCy = h * 0.54, engineR = Math.min(w * 0.11, h * 0.2);
 
     // reservoirs
+    ctx.lineWidth = 2;
     ctx.fillStyle = inkSurface;
-    ctx.strokeStyle = accent;
-    ctx.lineWidth = 1.5;
     ctx.fillRect(hotX, boxY, boxW, boxH);
+    ctx.strokeStyle = hotColor;
     ctx.strokeRect(hotX, boxY, boxW, boxH);
     ctx.fillRect(coldX, boxY, boxW, boxH);
-    ctx.strokeStyle = brass;
+    ctx.strokeStyle = coldColor;
     ctx.strokeRect(coldX, boxY, boxW, boxH);
 
-    ctx.font = '11px "IBM Plex Mono", ui-monospace, monospace';
     ctx.textAlign = 'center';
+    ctx.textBaseline = 'alphabetic';
+    ctx.font = F(0.95, 600);
+    ctx.fillStyle = hotColor;
+    ctx.fillText(narrow ? 'HOT' : 'HOT SIDE', hotX + boxW / 2, boxY - 12);
+    ctx.fillStyle = coldColor;
+    ctx.fillText(narrow ? 'COLD' : 'COLD SIDE', coldX + boxW / 2, boxY - 12);
+    ctx.font = F(narrow ? 0.95 : 1.35, 600);
     ctx.fillStyle = ivory;
-    ctx.fillText('HOT', hotX + boxW / 2, boxY - 10);
-    ctx.fillText(T.th.toFixed(0) + ' K', hotX + boxW / 2, boxY + boxH / 2 + 4);
-    ctx.fillText('COLD', coldX + boxW / 2, boxY - 10);
-    ctx.fillText(T.tc.toFixed(0) + ' K', coldX + boxW / 2, boxY + boxH / 2 + 4);
+    ctx.fillText(T.th.toFixed(0) + ' K', hotX + boxW / 2, boxY + boxH / 2 + 8);
+    ctx.fillText(T.tc.toFixed(0) + ' K', coldX + boxW / 2, boxY + boxH / 2 + 8);
 
-    // flows: Qh (hot -> engine), W (engine -> up), Qc (engine -> cold)
-    var maxThick = Math.min(24, engineR * 1.1);
+    // flows: heat in (hot -> engine), useful work (engine -> up), wasted heat (engine -> cold)
+    var maxThick = Math.min(30, engineR * 0.9);
     var qhThick = maxThick;
     var wThick = maxThick * eta;
     var qcThick = maxThick * (1 - eta);
+    var workTop = Math.max(Engine.textPx(state, 1) * (narrow ? 2.2 : 1.4), boxY - h * 0.2);
 
-    drawArrow(ctx, hotX + boxW + 4, engineCy, engineCx - engineR - 4, engineCy, qhThick, accent);
-    flowDots(ctx, hotX + boxW + 4, engineCy, engineCx - engineR - 4, engineCy, 5, accent, phase);
+    drawArrow(ctx, hotX + boxW + 6, engineCy, engineCx - engineR - 6, engineCy, qhThick, hotColor);
+    flowDots(ctx, hotX + boxW + 6, engineCy, engineCx - engineR - 6, engineCy, 6, ivory, phase);
 
-    drawArrow(ctx, engineCx + engineR + 4, engineCy, coldX - 4, engineCy, qcThick, brass, 0.9);
-    flowDots(ctx, engineCx + engineR + 4, engineCy, coldX - 4, engineCy, 5, brass, phase);
-
-    var workY = boxY - 34;
-    drawArrow(ctx, engineCx, engineCy - engineR - 2, engineCx, Math.max(14, workY), wThick, brassBright);
-    flowDots(ctx, engineCx, engineCy - engineR - 2, engineCx, Math.max(14, workY), 4, brassBright, phase);
+    if (qcThick > 0.5) {
+      drawArrow(ctx, engineCx + engineR + 6, engineCy, coldX - 6, engineCy, qcThick, parchment, 0.75);
+      flowDots(ctx, engineCx + engineR + 6, engineCy, coldX - 6, engineCy, 6, ivory, phase);
+    }
+    if (wThick > 0.5) {
+      drawArrow(ctx, engineCx, engineCy - engineR - 4, engineCx, workTop, wThick, brassBright);
+      flowDots(ctx, engineCx, engineCy - engineR - 4, engineCx, workTop, 4, ink, phase);
+    }
 
     // engine
     ctx.fillStyle = inkSurface;
     ctx.strokeStyle = ivory;
-    ctx.lineWidth = 1.5;
+    ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.arc(engineCx, engineCy, engineR, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
+    ctx.fillStyle = parchment;
+    ctx.font = F(0.72, 500);
+    ctx.fillText('ENGINE', engineCx, engineCy - engineR * 0.32);
     ctx.fillStyle = ivory;
-    ctx.font = '11px "IBM Plex Mono", ui-monospace, monospace';
-    ctx.fillText('ENGINE', engineCx, engineCy + 4);
+    ctx.font = F(1.6, 600);
+    ctx.fillText(workPct + '%', engineCx, engineCy + engineR * 0.18);
+    ctx.fillStyle = parchment;
+    ctx.font = F(0.72, 500);
+    ctx.fillText('efficient', engineCx, engineCy + engineR * 0.52);
 
-    ctx.fillStyle = stone;
-    ctx.font = '10px "IBM Plex Mono", ui-monospace, monospace';
-    ctx.fillText('Qh', hotX + boxW + (engineCx - engineR - hotX - boxW) / 2, engineCy - qhThick / 2 - 6);
-    ctx.fillText('Qc', engineCx + engineR + (coldX - engineCx - engineR) / 2, engineCy - qcThick / 2 - 6);
-    ctx.fillText('W', engineCx + 14, (engineCy - engineR + Math.max(14, workY)) / 2);
+    // flow labels, in plain words, with each share of the heat
+    var midIn = (hotX + boxW + engineCx - engineR) / 2;
+    var midOut = (engineCx + engineR + coldX) / 2;
+    var above = narrow ? engineCy + maxThick / 2 + Engine.textPx(state, 2.1) : engineCy - maxThick / 2 - 14;
+    ctx.font = F(narrow ? 0.78 : 0.9, 600);
+    ctx.fillStyle = hotColor;
+    ctx.fillText('Heat in', midIn, above - Engine.textPx(state, 1.05));
+    ctx.fillStyle = ivory;
+    ctx.fillText('100%', midIn, above);
+    ctx.fillStyle = parchment;
+    ctx.fillText(narrow ? 'Wasted' : 'Wasted heat', midOut, above - Engine.textPx(state, 1.05));
+    ctx.fillStyle = ivory;
+    ctx.fillText(wastePct + '%', midOut, above);
+    if (narrow) {
+      /* one line, above the work arrow */
+      ctx.fillStyle = brassBright;
+      ctx.fillText('Work ' + workPct + '%', engineCx, Math.max(Engine.textPx(state, 0.9), workTop - 6));
+    } else {
+      ctx.textAlign = 'left';
+      ctx.fillStyle = brassBright;
+      var workLabelX = engineCx + Math.max(wThick, 8) / 2 + 12;
+      var workLabelY = (engineCy - engineR + workTop) / 2;
+      ctx.fillText('Useful work', workLabelX, workLabelY);
+      ctx.fillStyle = ivory;
+      ctx.fillText(workPct + '%', workLabelX, workLabelY + Engine.textPx(state, 1.05));
+    }
+
+    // the point, spelled out at the extremes
+    var msg = null, msgColor = ivory;
+    if (T.tc >= T.th) { msg = 'No useful work: the cold side must be colder than the hot side'; msgColor = hotColor; }
+    else if (T.tc <= 0) { msg = '100% only at 0 K \u2014 and nothing can ever reach 0 K'; msgColor = coldColor; }
+    if (msg) {
+      ctx.textAlign = 'center';
+      ctx.font = F(narrow ? 0.7 : 0.95, 600);
+      if (narrow) msg = (T.tc >= T.th) ? 'No work: cold must be colder' : '100% only at 0 K \u2014 impossible';
+      ctx.fillStyle = msgColor;
+      ctx.fillText(msg, w / 2, h - Engine.textPx(state, 1) * 0.9);
+    }
     ctx.textAlign = 'left';
   }
 

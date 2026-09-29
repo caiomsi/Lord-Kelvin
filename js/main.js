@@ -243,3 +243,15 @@
   })();
 
 })();
+
+/* Filled slider tracks — every range input shows how far along it is */
+(function () {
+  'use strict';
+  var E = window.KelvinEngine;
+  if (!E || !E.syncRange) return;
+  var ranges = document.querySelectorAll('input[type="range"]');
+  for (var i = 0; i < ranges.length; i++) {
+    E.syncRange(ranges[i]);
+    ranges[i].addEventListener('input', function (e) { E.syncRange(e.target); });
+  }
+})();
