@@ -69,8 +69,11 @@ part of the project:
   about the age of the **Sun**, not the Earth's cooling.
 - **"There is nothing new to be discovered in physics" is apocryphal** — no primary
   source; nearest real statement is Michelson, 1894.
-- His **Glasgow** house was the first in Britain lit by electric light (1881), not
-  Netherhall.
+- His **Glasgow** house (1881) was one of the first in the world lit *entirely* by
+  electric light — not "first in Britain" (Cragside was earlier), and not Netherhall.
+- He gave absolute zero as −273 °C in 1848 (aged 23); −273.15 is the modern value.
+  Second marriage: 24 June 1874, two days *before* his 50th birthday. See the
+  fact-check log at the end of `RESEARCH.md`.
 
 **Imagery integrity.** Every image on the site is a genuine public-domain historical
 image, credited in ch. 11 and `images/README.md`. The site deliberately uses **no

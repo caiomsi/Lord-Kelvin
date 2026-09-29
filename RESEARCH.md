@@ -91,7 +91,7 @@ the two clouds below.
 
 | Contribution | What people believed before |
 |---|---|
-| **Absolute temperature scale (1848)**, from Carnot's theory, independent of any working substance. Absolute zero = **−273.15 °C**. | Temperature scales were arbitrary and tied to a substance (mercury, alcohol). No agreed *lower bound* to temperature. |
+| **Absolute temperature scale (1848)**, from Carnot's theory, independent of any working substance. Kelvin put absolute zero at **−273 °C** (paper presented 5 June 1848, when he was 23); the modern value −273.15 °C came later (NIST). | Temperature scales were arbitrary and tied to a substance (mercury, alcohol). No agreed *lower bound* to temperature. |
 | **Second Law of Thermodynamics — Kelvin statement (1851)**; "On a Universal Tendency in Nature to the Dissipation of Mechanical Energy" (1852) → the "heat death" idea. | Heat was **caloric**, a weightless fluid that flowed and was conserved. Energy was not yet a unifying concept. |
 | **Joule–Thomson effect (1852)** with Joule: gas throttled through a porous plug cools below its inversion temperature. | Gases were assumed to behave ideally; no practical route to liquefying air. This became **refrigeration, liquid nitrogen, MRI magnets, and the whole cryogenics industry**. |
 | **Transatlantic telegraph**: the theory of signal retardation in a long submerged cable (retardation ∝ **L²**, the "law of squares"), the **mirror galvanometer**, the **siphon recorder**. Failed cable 1858; success **1866**; **knighted 1866**. | Signals were assumed effectively instantaneous; Wildman Whitehouse insisted on brute high voltage, which destroyed the 1858 cable. Kelvin's answer was tiny voltages plus an absurdly sensitive detector. |
@@ -101,7 +101,7 @@ the two clouds below.
 **Awards/honours**: FRS **1851**; **Royal Medal 1856**; **Copley Medal 1883**;
 **knighted 1866** (for the cable); **Baron Kelvin of Largs 1892** — the **first British
 scientist raised to the House of Lords**; **President of the Royal Society 1890–95**;
-**Order of Merit 1902**; Privy Counsellor 1902; 21 honorary doctorates. (No Nobel — the
+**Order of Merit 1902**; Privy Counsellor 1902; honorary degrees from "almost every university" (DNB 1912 — the often-quoted "21" is unverified). (No Nobel — the
 prizes began in 1901 and he never received one.)
 
 **Legacy today**: the **kelvin** is an SI base unit, and since the **2019
@@ -126,17 +126,17 @@ to the fake "nothing left to discover" quote.
 ## Personal (rubric §4)
 
 - **Restless, digressive lecturer** who regularly abandoned the syllabus for whatever
-  he was researching that week; filled **100+ working notebooks** over his life.
+  he was researching that week; kept many working notebooks (the "100+" figure is unverified — don't use it).
 - **Sailor**: bought the 126-ton schooner yacht ***Lalla Rookh*** (from 1870) and spent
   summers aboard; many of his later patents are maritime because of it.
 - **Musician** — played the French horn. **Athlete** — champion sculler at Cambridge.
 - **Married twice, no children.** First **Margaret Crum** (1852), his childhood
   sweetheart, in poor health for most of their marriage; she died 1870. Second
   **Frances ("Fanny") Blandy** of Madeira, whose family he met because the cable ships
-  put in at Funchal — they married in 1874 **on his 50th birthday**.
+  put in at Funchal — they married on **24 June 1874, two days before his 50th birthday** (not on it — Wikipedia).
 - ⚠️ **Correction to a common claim**: it was his **Glasgow house** (Professors' Square,
-  University of Glasgow) that was **the first house in Britain lit by electric light,
-  in 1881** — not Netherhall, the Largs mansion he built in 1874 and died in.
+  University of Glasgow) that was **one of the first houses in the world lit entirely by electric
+  light, in 1881** — NOT "first in Britain": Cragside (Northumberland) had electric light in 1878–80 — not Netherhall, the Largs mansion he built in 1874 and died in.
 - **Philosophy of science** — two pillars:
   1. **Measurement is knowledge.** "When you can measure what you are speaking about,
      and express it in numbers, you know something about it; but when you cannot
@@ -204,3 +204,20 @@ to the fake "nothing left to discover" quote.
 
 **Note on the apocryphal quote** — cite the Michelson 1894 origin and the Millikan
 misattribution when giving the verdict in ch. 10.
+
+---
+
+## Fact-check pass, 2026-09-28
+
+Corrections made after checking against MacTutor, Wikipedia, the 1912 DNB, NIST, the
+Science Museum and the Royal Society picture library:
+- 1848: he gave absolute zero as −273 °C, aged 23 (presented 5 June 1848).
+- Second marriage 24 June 1874 — two days *before* his 50th birthday.
+- Glasgow house 1881: "one of the first in the world lit entirely by electric light", not
+  "first in Britain" (Cragside, 1878–80).
+- X-rays: he *was* sceptical at first (Thompson 1910), but the "hoax" quote is unsourced; he
+  congratulated Röntgen by Jan 1896 and had his hand X-rayed 6 May 1896 (Royal Society).
+- Patents: *applied for* about 70, not all granted.
+- 1858 cable: failed 20 Oct 1858 after 732 messages (DNB 1912).
+- Aerial-navigation letter: to Baden Baden-Powell, 8 Dec 1896.
+- Unverified and removed: "21 honorary degrees", "100+ notebooks".

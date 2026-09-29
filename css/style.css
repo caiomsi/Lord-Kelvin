@@ -576,6 +576,7 @@ input[type=range]:focus-visible{outline:2px solid var(--chapter-accent);outline-
 }
 .verdict-tag.is-false{color:var(--ember)}
 .verdict-tag.is-true{color:var(--brass)}
+.verdict-tag.is-mixed{color:var(--stone)}
 .fact-check{margin:2.4rem 0 0}
 .pullquote cite{
   display:block;margin-top:.8rem;font-family:var(--font-mono);font-style:normal;

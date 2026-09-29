@@ -19,7 +19,7 @@
   var STOPS = [
     { id: 'ch03', secs: 30, title: 'Hook — absolute zero',
       points: [
-        'Every temperature has a floor: −273.15 °C. Kelvin found it in 1848, aged 24.',
+        'Every temperature has a floor: absolute zero, −273.15 °C. Kelvin worked it out in 1848, aged 23.',
         'Drag the slider down — the molecules slow down and stop at 0 K.',
         'Now drag it up — faster and faster, until they glow like the Sun.'
       ] },
@@ -90,11 +90,11 @@
       ['Awards?', 'FRS 1851, Royal Medal 1856, knighted 1866, Copley Medal 1883, President of the Royal Society 1890–95, Baron Kelvin of Largs 1892, Order of Merit 1902. Never a Nobel — they began in 1901.']
     ] },
     { h: 'Personal', items: [
-      ['What was he like?', 'A restless, digressive lecturer who abandoned his own syllabus mid-course. Over a hundred working notebooks. Devout, stubborn, and gracious when finally proved wrong.'],
+      ['What was he like?', 'A restless, digressive lecturer who abandoned his own syllabus mid-course. Devout, stubborn, and gracious when finally proved wrong.'],
       ['Hobbies?', 'Sailing — he owned the 126-ton yacht Lalla Rookh and worked aboard her. Played the French horn. Won the Colquhoun Sculls at Cambridge in 1843.'],
       ['Peers?', 'Joule (collaborator), Maxwell, Helmholtz (close friend), Stokes (~650 letters), Tait (co-author), Faraday, Clausius (rival), Darwin (antagonist), Perry, Rutherford.'],
       ['Philosophy of science?', 'Two things: if you cannot measure it in numbers your knowledge is "meagre and unsatisfactory"; and nothing is understood until you can build a mechanical model of it.'],
-      ['Anything unusual?', 'He got rich from ~70 patents while holding a chair. His Glasgow house was the first in Britain lit by electric light, in 1881. First British scientist raised to the House of Lords.']
+      ['Anything unusual?', 'He got rich from ~70 patents while holding a chair. In 1881 his Glasgow house became one of the first in the world lit entirely by electric light. First British scientist raised to the House of Lords.']
     ] },
     { h: 'The hard questions', items: [
       ['Was he wrong about anything?', 'Badly — the age of the Earth. He said 20–40 million years; it is 4.54 billion.'],
