@@ -3,7 +3,7 @@
 An interactive site about **William Thomson, 1st Baron Kelvin (1824–1907)**, built
 for an AP Physics research project.
 
-**Live:** https://caiomsi.github.io/Lord-Kelvin/
+**Live:** https://kelvin.caiomsi.com/
 
 11 short chapters in four parts — his life, his science, where he was wrong and right,
 and the man himself — with five experiments you can drive, and a presenter mode for a

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://caiomsi.github.io/Lord-Kelvin/sitemap.xml
+Sitemap: https://kelvin.caiomsi.com/sitemap.xml
